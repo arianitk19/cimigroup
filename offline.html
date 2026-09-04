@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="sq">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Jashtë linje — Cimi Group SA</title>
+  <meta name="theme-color" content="#0E171E" />
+  <link rel="icon" href="assets/icons/favicon.ico" sizes="any" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    .offline { min-height: 100svh; display: grid; place-items: center; text-align: center; background: var(--bg); padding: 32px; }
+    .offline-inner { max-width: 460px; }
+    .offline-logo { height: 54px; width: auto; margin: 0 auto 30px; }
+    .offline h1 { font-size: clamp(28px, 6vw, 44px); font-weight: 800; letter-spacing: -.02em; margin: 0 0 14px; color: var(--heading); }
+    .offline p { color: var(--text-muted); margin: 0 0 28px; }
+  </style>
+</head>
+<body>
+  <main class="offline">
+    <div class="offline-inner">
+      <img src="assets/branding/logo/logo-full.png" alt="Cimi Group SA" class="offline-logo" />
+      <p class="eyebrow" style="justify-content:center;">Jashtë linje</p>
+      <h1>Nuk ka lidhje interneti</h1>
+      <p>Duket se jeni jashtë linje. Kontrolloni lidhjen tuaj dhe provoni sërish — faqja do të ngarkohet kur të riktheheni në linjë.</p>
+      <button type="button" class="btn btn-primary" onclick="location.reload()">Provo sërish</button>
+    </div>
+  </main>
+</body>
+</html>

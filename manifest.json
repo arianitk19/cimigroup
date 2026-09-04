@@ -1,0 +1,19 @@
+{
+  "name": "Cimi Group SA — Materiale Ndërtimore & Zgjidhje Profesionale",
+  "short_name": "Cimi Group",
+  "description": "Materiale ndërtimore, elektrik, hidrosanitari dhe zgjidhje profesionale me mbështetje në terren — nga fillimi deri në përfundim.",
+  "lang": "sq",
+  "dir": "ltr",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0E171E",
+  "theme_color": "#0E171E",
+  "categories": ["business", "shopping", "productivity"],
+  "icons": [
+    { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
