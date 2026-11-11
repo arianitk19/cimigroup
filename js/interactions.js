@@ -70,15 +70,26 @@
       '<p class="panel-desc">' + esc(L(p.description) || L(p.excerpt)) + '</p>' + mats + gal + '</div>';
     var panel = ov.querySelector('.project-panel'); if (panel) panel.scrollTop = 0;
   }
+  var ovTimer = null;
   function openProject(p) {
-    ovFocus = document.activeElement; renderProject(p); ov.hidden = false;
-    requestAnimationFrame(function () { ov.classList.add('is-open'); }); document.body.classList.add('no-scroll');
-    setTimeout(function () { var c = ov.querySelector('[data-project-close]'); if (c) c.focus(); }, 60);
+    clearTimeout(ovTimer);
+    ovFocus = document.activeElement; renderProject(p);
+    var btn = ov.querySelector('.panel-close');
+    if (btn) { btn.innerHTML = '<span class="pc-x-label">' + esc(t('menu.close')) + '</span><span class="pc-x-ico" aria-hidden="true"><i></i><i></i></span>'; btn.setAttribute('aria-label', t('menu.close')); }
+    ov.hidden = false; document.body.classList.add('no-scroll');
+    // Hapja nis pasi fotoja kryesore është dekoduar (më së shumti 220ms) → pa "kërcim" gjatë animacionit
+    var started = false;
+    function start() { if (started) return; started = true; requestAnimationFrame(function () { requestAnimationFrame(function () { ov.classList.add('is-open'); }); }); }
+    var hero = ovContent.querySelector('.ph-main');
+    if (hero && hero.decode) hero.decode().then(start, start);
+    setTimeout(start, 220);
+    setTimeout(function () { if (btn && ov.classList.contains('is-open')) { try { btn.focus({ preventScroll: true }); } catch (e) { btn.focus(); } } }, 700);
   }
   function closeProject() {
     ov.classList.remove('is-open'); document.body.classList.remove('no-scroll');
-    setTimeout(function () { ov.hidden = true; ovContent.innerHTML = ''; }, 420);
-    if (ovFocus && ovFocus.focus) ovFocus.focus();
+    clearTimeout(ovTimer);
+    ovTimer = setTimeout(function () { ov.hidden = true; ovContent.innerHTML = ''; }, 520);
+    if (ovFocus && ovFocus.focus) { try { ovFocus.focus({ preventScroll: true }); } catch (e) { ovFocus.focus(); } }
   }
   ov.querySelectorAll('[data-project-close]').forEach(function (el) { el.addEventListener('click', closeProject); });
 

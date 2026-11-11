@@ -739,6 +739,40 @@ img.is-loaded { background: none; }
 .panel-gallery img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 12px; cursor: zoom-in; transition: opacity .3s var(--ease), transform .4s var(--ease); }
 .panel-gallery img:hover { opacity: .88; transform: scale(.985); }
 
+
+/* Paneli i projektit — hapje e butë + buton mbylljeje modern */
+.project-overlay-scrim { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(4,7,10,.78); transition: opacity .45s var(--ease); }
+.project-panel { transform: translate3d(100%,0,0); will-change: transform; transition: transform .5s var(--ease); overscroll-behavior: contain; }
+.project-overlay.is-open .project-panel { transform: translate3d(0,0,0); transition: transform .7s var(--ease-drawer); }
+.project-panel-inner { opacity: 0; transition: opacity .2s var(--ease); }
+.project-overlay.is-open .project-panel-inner { opacity: 1; transition: opacity .5s var(--ease-out) .12s; }
+.panel-body > * { opacity: 0; transform: translate3d(0,14px,0); transition: opacity .2s var(--ease), transform .2s var(--ease); }
+.project-overlay.is-open .panel-body > * { opacity: 1; transform: none; transition: opacity .55s var(--ease-out) .32s, transform .7s var(--ease-drawer) .32s; }
+.project-overlay.is-open .panel-body > *:nth-child(n+3) { transition-delay: .4s; }
+.project-overlay.is-open .panel-body > *:nth-child(n+5) { transition-delay: .48s; }
+
+.panel-close { width: auto; height: 46px; display: flex; align-items: center; gap: 10px; width: fit-content; padding: 0 6px 0 16px; margin: 18px 16px -64px auto; border-radius: 999px; border: 1px solid rgba(255,255,255,.22); background: rgba(10,16,21,.62); -webkit-backdrop-filter: blur(14px) saturate(140%); backdrop-filter: blur(14px) saturate(140%); box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 14px 30px -14px rgba(0,0,0,.8); color: #fff; top: 18px;
+  opacity: 0; transform: translate3d(0,-10px,0) scale(.92); transition: opacity .2s var(--ease), transform .25s var(--ease), border-color .3s var(--ease), background .3s var(--ease); }
+.project-overlay.is-open .panel-close { opacity: 1; transform: none; transition: opacity .45s var(--ease-out) .35s, transform .6s var(--ease-drawer) .35s, border-color .3s var(--ease), background .3s var(--ease); }
+.panel-close:hover { background: rgba(10,16,21,.8); border-color: var(--accent); transform: none; }
+.panel-close:active { transform: scale(.95); }
+.pc-x-label { font-size: 11px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; line-height: 1; }
+.pc-x-ico { position: relative; width: 32px; height: 32px; flex: none; border-radius: 50%; background: var(--accent); box-shadow: 0 6px 16px -6px var(--accent); transition: transform .5s var(--ease-drawer); }
+.pc-x-ico i { position: absolute; left: 10px; top: 15px; width: 12px; height: 2px; border-radius: 2px; background: #fff; transform: rotate(45deg); }
+.pc-x-ico i + i { transform: rotate(-45deg); }
+.panel-close:hover .pc-x-ico { transform: rotate(90deg); }
+
+/* Telefon: paneli hapet nga poshtë si fletë, nën shiritin e statusit */
+@media (max-width: 719px) {
+  .project-overlay { align-items: flex-end; justify-content: center; }
+  .project-panel { width: 100%; height: calc(100% - max(16px, env(safe-area-inset-top)) - 12px); border-radius: 24px 24px 0 0; transform: translate3d(0,100%,0); box-shadow: 0 -30px 80px -20px rgba(0,0,0,.9); }
+  .project-panel::before { content: ""; position: sticky; top: 8px; z-index: 6; display: block; width: 44px; height: 4px; margin: 8px auto -12px; border-radius: 4px; background: rgba(255,255,255,.55); box-shadow: 0 1px 4px rgba(0,0,0,.5); pointer-events: none; }
+  .panel-close { top: 26px; margin: 26px 14px -72px auto; }
+  .panel-hero img.ph-bg { display: none; }
+  .panel-hero img.ph-main { width: 100%; max-height: 62vh; object-fit: cover; }
+}
+@media (prefers-reduced-motion: reduce) { .panel-body > *, .project-panel-inner, .panel-close { opacity: 1 !important; transform: none !important; } }
+
 /* Puna në terren */
 .field-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: auto; grid-auto-flow: dense; gap: 12px; }
 @media (min-width: 1000px) { .field-grid { grid-template-columns: repeat(5, 1fr); gap: 16px; } }
