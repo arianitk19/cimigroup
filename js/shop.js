@@ -5,7 +5,8 @@
 (function () {
   'use strict';
   var H = window.H, esc = H.esc, L = H.L, t = H.t, D = window.CIMI_DATA;
-  var P = D.PRODUCTS, C = D.CATEGORIES;
+  var P = D.PRODUCTS, C = D.CATEGORIES, PHOTOS = D.PRODUCT_PHOTOS || {};
+  function photo(p) { return PHOTOS[p.id] ? 'assets/products/' + PHOTOS[p.id] : ''; }
 
   /* ---------- Ikonat e produkteve (64×64, vijë + theks portokalli) ----------
      .a = mbushje portokalli · .as = vijë portokalli · .h = vrimë (ngjyra e sfondit) */
@@ -124,7 +125,7 @@
     var list = ids();
     var items = list.map(function (id) {
       var p = byId(id), s = spec(p);
-      return '<li class="qp-item" data-qp-id="' + id + '"><span class="qp-ico">' + icon(p.icon) + '</span>' +
+      return '<li class="qp-item" data-qp-id="' + id + '"><span class="qp-ico">' + (photo(p) ? '<img src="' + photo(p) + '" alt="">' : icon(p.icon)) + '</span>' +
         '<div class="qp-info"><div class="qp-name">' + esc(title(p)) + '</div>' + (s ? '<div class="qp-spec">' + esc(cap(s)) + '</div>' : '') + '</div>' +
         '<div class="qp-qty" role="group" aria-label="' + esc(t('shop.qty')) + '"><button type="button" data-q-dec aria-label="−">−</button>' +
         '<input type="number" inputmode="numeric" min="1" max="9999" value="' + quote[id] + '" data-q-input aria-label="' + esc(t('shop.qty')) + '">' +
@@ -208,7 +209,9 @@
     var c = catOf(p), s = spec(p), on = !!quote[p.id];
     var hay = norm([title(p), s, L(c.name), p.brand || ''].join(' '));
     return '<article class="product-card pc-anim" data-cat="' + p.cat + '" data-search="' + esc(hay) + '" style="--d:' + (i % 16) + '">' +
-      '<div class="pc-media"><span class="pc-grid" aria-hidden="true"></span><span class="pc-icon">' + icon(p.icon) + '</span>' +
+      (photo(p)
+        ? '<div class="pc-media has-photo"><img class="pc-photo" src="' + photo(p) + '" alt="' + esc(title(p)) + '" loading="lazy" decoding="async">'
+        : '<div class="pc-media"><span class="pc-grid" aria-hidden="true"></span><span class="pc-icon">' + icon(p.icon) + '</span>') +
         (p.brand ? '<span class="pc-brand"><img src="' + H.brandLogo(p.brand) + '" alt="' + esc(p.brand) + '" data-ph="brand" loading="lazy"></span>' : '') +
         '<span class="pc-no">' + esc(t('shop.no')) + ' ' + pad(i + 1) + '</span></div>' +
       '<div class="pc-body"><span class="pc-cat">' + esc(L(c.name)) + '</span>' +
@@ -223,7 +226,7 @@
 
   function view() {
     readQuery();
-    var chips = '<button type="button" class="shop-chip" data-shop-cat="all">' + esc(t('shop.all')) + '<span>' + P.length + '</span></button>' +
+    var chips = '<button type="button" class="shop-chip" data-shop-cat="all">' + esc(t('shop.all')) + '</button>' +
       C.map(function (c) {
         var n = P.filter(function (p) { return p.cat === c.key; }).length;
         return '<button type="button" class="shop-chip" data-shop-cat="' + c.key + '">' + esc(L(c.name)) + '<span>' + n + '</span></button>';
@@ -234,7 +237,6 @@
           '<h1 class="shop-title" data-reveal>' + esc(t('shop.title')) + '<span>.</span></h1>' +
           '<p class="shop-intro" data-reveal>' + esc(t('shop.intro')) + '</p></div>' +
         '<div class="shop-stats" data-reveal>' +
-          '<div class="shop-stat"><b>' + P.length + '</b><span>' + esc(t('shop.products')) + '</span></div>' +
           '<div class="shop-stat"><b>' + C.length + '</b><span>' + esc(t('shop.cats')) + '</span></div>' +
           '<div class="shop-stat"><b>' + BRANDS.length + '</b><span>' + esc(t('shop.brands')) + '</span></div>' +
         '</div>' +
@@ -251,6 +253,7 @@
           '<div class="product-grid" data-product-grid>' + P.map(card).join('') + '</div>' +
           '<div class="shop-empty" data-shop-empty hidden>' + icon('box') + '<h3>' + esc(t('shop.empty')) + '</h3><p>' + esc(t('shop.emptyHint')) + '</p>' +
             '<button type="button" class="btn btn-ghost btn-sm" data-shop-reset>' + esc(t('shop.clear')) + '</button></div>' +
+          '<p class="shop-credit">' + esc(t('shop.credit')) + ' <a href="assets/products/CREDITS.md" target="_blank" rel="noopener">Wikimedia Commons</a></p>' +
         '</div>' +
       '</section>';
   }
@@ -272,7 +275,7 @@
       b.classList.toggle('is-active', on); b.setAttribute('aria-pressed', on ? 'true' : 'false');
     });
     var cnt = document.querySelector('[data-shop-count]');
-    if (cnt) cnt.innerHTML = esc(t('shop.showing')) + ' <b>' + shown + '</b> ' + esc(t('shop.of')) + ' ' + P.length + ' ' + esc(t('shop.products'));
+    if (cnt) cnt.innerHTML = shown < P.length ? '<b>' + shown + '</b> ' + esc(t(shown === 1 ? 'shop.product' : 'shop.products')) : '';
     var em = document.querySelector('[data-shop-empty]'); if (em) em.hidden = shown > 0;
     var clr = document.querySelector('[data-shop-clear]'); if (clr) clr.hidden = !state.q;
   }

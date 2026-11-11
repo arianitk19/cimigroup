@@ -7,6 +7,7 @@
   var D = window.CIMI_DATA;
 
   function href(route) { return '#/' + (route === 'ballina' ? '' : route); }
+  var CTA_GO = '<span class="cta-go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>';
 
   /* Sfond hero minimalist i gjeneruar — skenë ndërtimi (vinç + objekt) në stil blueprint */
   var HERO_ART =
@@ -59,8 +60,8 @@
         '<p class="eyebrow" data-reveal>' + esc(t('hero.eyebrow')) + '</p>' +
         '<h1 class="hero-title" data-reveal>' + esc(t('hero.t1')) + '<br><span class="text-accent">' + esc(t('hero.accent')) + '</span></h1>' +
         '<p class="hero-sub" data-reveal>' + esc(t('hero.sub')) + '</p>' +
-        '<div class="hero-cta" data-reveal><a href="#/dyqani" class="btn btn-primary btn-shop" data-route="dyqani">' + (H.BAG || '') + esc(t('shop.open')) + ARROW + '</a>' +
-        '<a href="' + href('projekte') + '" class="btn btn-outline" data-route="projekte">' + esc(t('cta.shiko')) + '</a></div>' +
+        '<div class="hero-cta" data-reveal><a href="#/dyqani" class="cta cta--primary" data-route="dyqani"><span class="cta-ico">' + (H.BAG || '') + '</span><span class="cta-txt">' + esc(t('shop.open')) + '</span>' + CTA_GO + '</a>' +
+        '<a href="' + href('projekte') + '" class="cta cta--ghost" data-route="projekte"><span class="cta-txt">' + esc(t('cta.shiko')) + '</span>' + CTA_GO + '</a></div>' +
       '</div>' +
     '</section>';
   }
@@ -117,7 +118,7 @@
     return '<section class="section section--alt"><div class="container-x">' +
       '<div class="section-head"><div><p class="eyebrow" data-reveal>' + esc(t('materials.eyebrow')) + '</p><h2 class="section-title" data-reveal>' + esc(t('materials.title')) + '</h2></div><p class="section-note" data-reveal>' + esc(t('materials.note')) + '</p></div>' +
       '<div class="materials-grid reveal-stagger">' + list.map(materialCard).join('') + '</div>' +
-      (showCta ? '<div class="cta-row" data-reveal><a href="#/dyqani" class="btn btn-primary btn-shop" data-route="dyqani">' + (H.BAG || '') + esc(t('shop.open')) + ARROW + '</a><a href="' + href('materialet') + '" class="btn btn-ghost" data-route="materialet">' + esc(t('materials.viewAll')) + '</a></div>' : '') +
+      (showCta ? '<div class="cta-row" data-reveal><a href="#/dyqani" class="cta cta--primary" data-route="dyqani"><span class="cta-ico">' + (H.BAG || '') + '</span><span class="cta-txt">' + esc(t('shop.open')) + '</span>' + CTA_GO + '</a><a href="' + href('materialet') + '" class="cta cta--ghost" data-route="materialet"><span class="cta-txt">' + esc(t('materials.viewAll')) + '</span>' + CTA_GO + '</a></div>' : '') +
     '</div></section>';
   }
 

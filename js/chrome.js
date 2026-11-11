@@ -50,7 +50,7 @@
           '</div>' +
           '<a href="#/dyqani" class="shop-btn" data-route="dyqani" data-shop-btn aria-label="' + esc(t('nav.dyqani')) + '">' +
             '<span class="shop-btn__ico">' + (H.BAG || '') + '<span class="shop-btn__count" data-quote-count' + (qn ? '' : ' hidden') + '>' + qn + '</span></span>' +
-            '<span class="shop-btn__txt"><b>' + esc(t('nav.dyqani')) + '</b><small>' + D.PRODUCTS.length + ' ' + esc(t('shop.products')) + '</small></span>' +
+            '<span class="shop-btn__txt"><b>' + esc(t('nav.dyqani')) + '</b></span>' +
           '</a>' +
           '<button type="button" class="menu-toggle" data-menu-toggle aria-expanded="' + isOpen + '" aria-controls="mobile-drawer" aria-label="' + esc(t(isOpen ? 'menu.close' : 'menu.open')) + '">' +
             '<span class="mt-label" aria-hidden="true"><span>' + esc(t('menu.open')) + '</span><span>' + esc(t('menu.close')) + '</span></span>' +
@@ -85,7 +85,7 @@
     var links = NAV_ALL.map(function (r, i) {
       return '<a href="' + href(r) + '" class="mega-link" data-route="' + r + '" data-menu-close style="--i:' + i + '">' +
         '<span class="ml-no">' + pad(i + 1) + '</span>' +
-        '<span class="ml-mask"><span class="ml-label">' + esc(t('nav.' + r)) + (r === 'dyqani' ? '<sup class="ml-badge">' + D.PRODUCTS.length + '</sup>' : '') + '</span></span>' +
+        '<span class="ml-mask"><span class="ml-label">' + esc(t('nav.' + r)) + '</span></span>' +
         '<span class="ml-here">' + esc(t('menu.here')) + '</span>' + ARROW_LG + '</a>';
     }).join('');
     var previews = NAV_ALL.map(function (r) {
@@ -95,8 +95,7 @@
     var M_TOP = ['dyqani', 'projekte', 'materialet', 'partneret'], M_MORE = ['terren', 'galeri', 'lokacioni'];
     var M_ARROW = '<svg class="m-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
     function mItem(r, i) {
-      return '<li style="--i:' + i + '"><a href="' + href(r) + '" class="m-link" data-route="' + r + '" data-menu-close><span>' + esc(t('nav.' + r)) +
-        (r === 'dyqani' ? '<sup class="ml-badge">' + D.PRODUCTS.length + '</sup>' : '') + '</span>' + M_ARROW + '</a></li>';
+      return '<li style="--i:' + i + '"><a href="' + href(r) + '" class="m-link" data-route="' + r + '" data-menu-close><span>' + esc(t('nav.' + r)) + '</span>' + M_ARROW + '</a></li>';
     }
     var mnav = '<nav class="mega-mnav" aria-label="Menu"><ul class="m-list">' + M_TOP.map(mItem).join('') +
       '<li style="--i:' + M_TOP.length + '"><button type="button" class="m-link" data-acc data-group="' + M_MORE.join(' ') + '" aria-expanded="false" aria-controls="m-more"><span>' + esc(t('menu.more')) + '</span><i class="m-plus" aria-hidden="true"></i></button>' +

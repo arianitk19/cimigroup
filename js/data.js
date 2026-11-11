@@ -89,6 +89,30 @@
     P('makina-pune', 'makina', 'machine', { sq: 'Makina pune', fr: 'Machines de travail', de: 'Arbeitsmaschinen' }, { sq: 'të ndryshme', fr: 'diverses', de: 'verschiedene' })
   ];
 
+  /* Fotot e produkteve (assets/products/). Produktet pa foto shfaqen me ikonë.
+     Për foto të re: vendos skedarin te assets/products/ dhe shto rreshtin këtu. */
+  var PRODUCT_PHOTOS = {
+    'bllok-tulltore': 'bllok-tulltore.jpg',
+    'bllok-rizam': 'bllok-rizam.jpg',
+    'hekur': 'hekur.jpg',
+    'rrjeta-hekuri': 'rrjeta-hekuri.jpg',
+    'bulona': 'bulona.jpg',
+    'tipla-betoni': 'tipla-betoni.jpg',
+    'tjegulla-tondach': 'tjegulla-tondach.jpg',
+    'tjegulla-creaton': 'tjegulla-creaton.jpg',
+    'kulmar-tondach': 'kulmar-tondach.jpg',
+    'kulmar-creaton': 'kulmar-creaton.jpg',
+    'styropor': 'styropor.jpg',
+    'styrodur': 'styrodur.jpg',
+    'ngjites-qeramike': 'ngjites-qeramike.jpg',
+    'materiale-qeramike': 'materiale-qeramike.jpg',
+    'gypa-elektrike': 'gypa-elektrike.jpg',
+    'gypa-vargon': 'gypa-vargon.jpg',
+    'sanitari-tm': 'sanitari-tm.jpg',
+    'ngrohje-qendrore': 'ngrohje-qendrore.jpg',
+    'makina-pune': 'makina-pune.jpg'
+  };
+
   /* Gjenero listat e kategorive nga produktet (p.sh. "Tjegulla Tondach — të gjitha llojet") */
   CATEGORIES.forEach(function (c) {
     var list = PRODUCTS.filter(function (p) { return p.cat === c.key; });
@@ -243,5 +267,5 @@
       brands: [{ name: 'Caparol' }, { name: 'Jotun' }] }
   ];
 
-  window.CIMI_DATA = { CATEGORIES: CATEGORIES, PRODUCTS: PRODUCTS, PROCESS: PROCESS, PROJECTS: PROJECTS, FIELD: FIELD, GALLERY: GALLERY, PARTNERS_FEATURED: PARTNERS_FEATURED, BRAND_GROUPS: BRAND_GROUPS };
+  window.CIMI_DATA = { CATEGORIES: CATEGORIES, PRODUCTS: PRODUCTS, PRODUCT_PHOTOS: PRODUCT_PHOTOS, PROCESS: PROCESS, PROJECTS: PROJECTS, FIELD: FIELD, GALLERY: GALLERY, PARTNERS_FEATURED: PARTNERS_FEATURED, BRAND_GROUPS: BRAND_GROUPS };
 })();
