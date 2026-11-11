@@ -62,21 +62,25 @@
         '<div class="hero-cta" data-reveal><a href="#/dyqani" class="btn btn-primary btn-shop" data-route="dyqani">' + (H.BAG || '') + esc(t('shop.open')) + ARROW + '</a>' +
         '<a href="' + href('projekte') + '" class="btn btn-outline" data-route="projekte">' + esc(t('cta.shiko')) + '</a></div>' +
       '</div>' +
-      '<a href="' + href('materialet') + '" class="hero-scroll" data-route="materialet" aria-label="Zbrit"><span class="hero-scroll-line"></span></a>' +
     '</section>';
   }
 
   function trust() {
-    var icons = [
-      'M20 6L9 17l-5-5', // check
-      'M12 2l7 4v6c0 5-3.5 8-7 10-3.5-2-7-5-7-10V6z', // shield
-      'M3 21h18M6 21V9l6-4 6 4v12', // building
-      'M4 5c0 8.5 6.5 15 15 15l1.5-3.5-4-1.5-1.5 2c-2.8-1.2-5.3-3.7-6.5-6.5l2-1.5-1.5-4z' // phone
-    ];
-    var keys = ['a', 'b', 'c', 'd'];
-    return '<section class="trust"><div class="container-x trust-grid">' +
-      keys.map(function (k, i) { return '<div class="trust-item" data-reveal><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="' + icons[i] + '"/></svg>' + esc(t('trust.' + k)) + '</div>'; }).join('') +
-      '</div></section>';
+    var dots = '';
+    for (var i = 0; i < 12; i++) { var a = i * Math.PI / 6; dots += '<circle class="a" cx="' + (12 + 8.6 * Math.sin(a)).toFixed(2) + '" cy="' + (12 - 8.6 * Math.cos(a)).toFixed(2) + '" r="1"/>'; }
+    var icons = {
+      a: '<path class="a" d="M12 3l8.5 4.2L12 11.4 3.5 7.2z"/><path d="M3.5 12l8.5 4.2 8.5-4.2M3.5 16.6l8.5 4.2 8.5-4.2"/>',
+      b: dots + '<path d="M8.6 12.2l2.4 2.4 4.4-4.8"/>',
+      c: '<circle class="a" cx="12" cy="5" r="2"/><path d="M11.2 6.9L6 20M12.8 6.9L18 20M7.6 15.6c2.9 1.5 5.9 1.5 8.8 0"/>',
+      d: '<path d="M2.5 6.5h10.5v9.5H2.5zM13 9.5h4.2l3.3 3.3V16H13"/><circle class="a" cx="7" cy="17.3" r="2"/><circle class="a" cx="16.8" cy="17.3" r="2"/>'
+    };
+    return '<section class="trust"><div class="container-x"><div class="trust-grid reveal-stagger">' +
+      ['a', 'b', 'c', 'd'].map(function (k, i) {
+        return '<article class="trust-card"><span class="tc-no" aria-hidden="true">0' + (i + 1) + '</span>' +
+          '<span class="tc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + icons[k] + '</svg></span>' +
+          '<div class="tc-text"><h3 class="tc-title">' + esc(t('trust.' + k)) + '</h3><p class="tc-desc">' + esc(t('trust.' + k + 'd')) + '</p></div></article>';
+      }).join('') +
+      '</div></div></section>';
   }
 
   function about() {
