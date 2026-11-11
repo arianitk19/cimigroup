@@ -5,7 +5,7 @@
    - Asete statike (CSS/JS/imazhe/fonts): stale-while-revalidate
    - Kalon pa ndërhyrje: kërkesat cross-origin (fonts CDN, harta)
    ========================================================================== */
-const VERSION = 'cimi-v2.4.0';
+const VERSION = 'cimi-v2.5.0';
 const STATIC_CACHE = `${VERSION}-static`;
 const RUNTIME_CACHE = `${VERSION}-runtime`;
 
