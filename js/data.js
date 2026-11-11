@@ -5,46 +5,102 @@
 (function () {
   'use strict';
 
-  /* Kategoritë e dyqanit — produktet reale të Cimi Group SA.
-     Teksti pas " — " shfaqet si nën-rresht (p.sh. "të gjitha llojet"). */
+  /* ==========================================================================
+     KATALOGU I DYQANIT
+     PRODUCTS është burimi i vetëm: kategoritë (CATEGORIES.items) gjenerohen prej tij.
+     Fusha: id, cat (çelësi i kategorisë), icon (ikona në shop.js), brand (logo te
+     assets/brands/<emri>.svg), name/spec { sq, fr, de }.
+     ========================================================================== */
   var CATEGORIES = [
     { key: 'cimento',
       name: { sq: 'Çimento & Llaç', fr: 'Ciment & Mortier', de: 'Zement & Mörtel' },
-      desc: { sq: 'Çimento në thasë dhe lidhës për muraturë, gati për çdo kantier.', fr: 'Ciment en sacs et liant de maçonnerie, prêts pour tout chantier.', de: 'Sackzement und Mauerbinder, bereit für jede Baustelle.' },
-      items: { sq: ['Çimento 42.5 PC — 25 kg', 'Sharrmall — 25 kg'], fr: ['Ciment 42.5 PC — 25 kg', 'Sharrmall — 25 kg'], de: ['Zement 42.5 PC — 25 kg', 'Sharrmall — 25 kg'] } },
+      desc: { sq: 'Çimento në thasë dhe lidhës për muraturë, gati për çdo kantier.', fr: 'Ciment en sacs et liant de maçonnerie, prêts pour tout chantier.', de: 'Sackzement und Mauerbinder, bereit für jede Baustelle.' } },
     { key: 'muratura',
       name: { sq: 'Blloqe & Oxhaqe', fr: 'Blocs & Cheminées', de: 'Ziegel & Schornsteine' },
-      desc: { sq: 'Blloqe giter për mure dhe sisteme oxhaqesh për ngrohje.', fr: 'Blocs creux pour la maçonnerie et systèmes de cheminée pour le chauffage.', de: 'Gitterziegel für Mauerwerk und Schornsteinsysteme für die Heizung.' },
-      items: { sq: ['Bllok giter Tulltore', 'Bllok giter Rizam', 'Oxhak Ø18', 'Oxhak Ø16', 'Oxhak për ngrohje'], fr: ['Bloc creux Tulltore', 'Bloc creux Rizam', 'Conduit de cheminée Ø18', 'Conduit de cheminée Ø16', 'Cheminée de chauffage'], de: ['Gitterziegel Tulltore', 'Gitterziegel Rizam', 'Schornstein Ø18', 'Schornstein Ø16', 'Heizungsschornstein'] } },
+      desc: { sq: 'Blloqe giter për mure dhe sisteme oxhaqesh për ngrohje.', fr: 'Blocs creux pour la maçonnerie et systèmes de cheminée pour le chauffage.', de: 'Gitterziegel für Mauerwerk und Schornsteinsysteme für die Heizung.' } },
     { key: 'hekur',
       name: { sq: 'Hekur & Fiksim', fr: 'Fer & Fixation', de: 'Eisen & Befestigung' },
-      desc: { sq: 'Hekur betoni, rrjeta dhe elemente fiksimi për strukturë e armaturë.', fr: 'Fer à béton, treillis et éléments de fixation pour structure et armatures.', de: 'Betonstahl, Matten und Befestigungselemente für Struktur und Bewehrung.' },
-      items: { sq: ['Hekur — dimensione të ndryshme', 'Rrjeta hekuri — dimensione të ndryshme', 'Kondor — të ndryshme', 'Bulona metalike — të ndryshme', 'Tipla betoni'], fr: ['Fer à béton — diverses dimensions', 'Treillis soudés — diverses dimensions', 'Kondor — divers', 'Boulons métalliques — divers', 'Chevilles pour béton'], de: ['Betonstahl — verschiedene Abmessungen', 'Baustahlmatten — verschiedene Abmessungen', 'Kondor — verschiedene', 'Metallbolzen — verschiedene', 'Betondübel'] } },
+      desc: { sq: 'Hekur betoni, rrjeta dhe elemente fiksimi për strukturë e armaturë.', fr: 'Fer à béton, treillis et éléments de fixation pour structure et armatures.', de: 'Betonstahl, Matten und Befestigungselemente für Struktur und Bewehrung.' } },
     { key: 'kulm',
       name: { sq: 'Kulm & Mbulesë', fr: 'Toiture & Couverture', de: 'Dach & Eindeckung' },
-      desc: { sq: 'Sisteme të plota kulmi nga Tondach dhe Creaton — tjegulla, kulmarë dhe aksesorë.', fr: 'Systèmes de toiture complets Tondach et Creaton — tuiles, faîtières et accessoires.', de: 'Komplette Dachsysteme von Tondach und Creaton — Ziegel, Firste und Zubehör.' },
-      items: { sq: ['Tjegulla Tondach — të gjitha llojet', 'Kulmar Tondach', 'Folie kulmi Tondach', 'Folie ventiluese për kulmar', 'Kapëse kulmaresh', 'Tjegulla Creaton', 'Kulmar Creaton', 'Bitolit'], fr: ['Tuiles Tondach — tous types', 'Faîtières Tondach', 'Écran de sous-toiture Tondach', 'Closoir ventilé pour faîtage', 'Crochets de faîtière', 'Tuiles Creaton', 'Faîtières Creaton', 'Bitolit'], de: ['Dachziegel Tondach — alle Arten', 'Firstziegel Tondach', 'Unterdachbahn Tondach', 'Firstlüftungsband', 'Firstklammern', 'Dachziegel Creaton', 'Firstziegel Creaton', 'Bitolit'] } },
+      desc: { sq: 'Sisteme të plota kulmi nga Tondach dhe Creaton — tjegulla, kulmarë dhe aksesorë.', fr: 'Systèmes de toiture complets Tondach et Creaton — tuiles, faîtières et accessoires.', de: 'Komplette Dachsysteme von Tondach und Creaton — Ziegel, Firste und Zubehör.' } },
     { key: 'izolim',
       name: { sq: 'Termoizolim', fr: 'Isolation thermique', de: 'Wärmedämmung' },
-      desc: { sq: 'Pllaka izoluese dhe ngjitës për fasada, dysheme e themele.', fr: 'Panneaux isolants et colles pour façades, sols et fondations.', de: 'Dämmplatten und Kleber für Fassaden, Böden und Fundamente.' },
-      items: { sq: ['Styropor — dimensione të ndryshme', 'Ngjitës për styropor — të ndryshëm', 'Styrodur — dimensione të ndryshme'], fr: ['Styropor — diverses dimensions', 'Colles pour polystyrène — diverses', 'Styrodur — diverses dimensions'], de: ['Styropor — verschiedene Abmessungen', 'Styroporkleber — verschiedene', 'Styrodur — verschiedene Abmessungen'] } },
+      desc: { sq: 'Pllaka izoluese dhe ngjitës për fasada, dysheme e themele.', fr: 'Panneaux isolants et colles pour façades, sols et fondations.', de: 'Dämmplatten und Kleber für Fassaden, Böden und Fundamente.' } },
     { key: 'qeramike',
       name: { sq: 'Qeramikë & Ngjitës', fr: 'Céramique & Colles', de: 'Keramik & Kleber' },
-      desc: { sq: 'Pllaka qeramike, ngjitës dhe izolime për banjo, kuzhina e dysheme.', fr: 'Carrelage, colles et isolations pour salles de bain, cuisines et sols.', de: 'Fliesen, Kleber und Abdichtungen für Bad, Küche und Boden.' },
-      items: { sq: ['Materiale qeramike', 'Ngjitës qeramike & izolime'], fr: ['Matériaux céramiques', 'Colles à carrelage & isolations'], de: ['Keramikmaterialien', 'Fliesenkleber & Abdichtungen'] } },
+      desc: { sq: 'Pllaka qeramike, ngjitës dhe izolime për banjo, kuzhina e dysheme.', fr: 'Carrelage, colles et isolations pour salles de bain, cuisines et sols.', de: 'Fliesen, Kleber und Abdichtungen für Bad, Küche und Boden.' } },
     { key: 'elektrik',
       name: { sq: 'Elektrik', fr: 'Électricité', de: 'Elektrik' },
-      desc: { sq: 'Material elektrik GEWISS dhe gypa për instalime elektrike.', fr: 'Matériel électrique GEWISS et gaines pour installations électriques.', de: 'GEWISS-Elektromaterial und Rohre für Elektroinstallationen.' },
-      items: { sq: ['Material elektrik GEWISS — të gjitha llojet', 'Gypa elektrikë — dimensione të ndryshme'], fr: ['Matériel électrique GEWISS — tous types', 'Gaines électriques — diverses dimensions'], de: ['Elektromaterial GEWISS — alle Arten', 'Elektro-Installationsrohre — verschiedene Abmessungen'] } },
+      desc: { sq: 'Material elektrik GEWISS dhe gypa për instalime elektrike.', fr: 'Matériel électrique GEWISS et gaines pour installations électriques.', de: 'GEWISS-Elektromaterial und Rohre für Elektroinstallationen.' } },
     { key: 'sanitari',
       name: { sq: 'Hidrosanitari & Ngrohje', fr: 'Plomberie & Chauffage', de: 'Sanitär & Heizung' },
-      desc: { sq: 'Gypa kanalizimi, materiale sanitare dhe ngrohje qendrore.', fr: 'Tuyaux d\'assainissement, matériel sanitaire et chauffage central.', de: 'Kanalrohre, Sanitärmaterial und Zentralheizung.' },
-      items: { sq: ['Gypa kanalizimi Vargon', 'Material sanitar TM — të gjitha llojet', 'Material për ngrohje qendrore'], fr: ['Tuyaux d\'assainissement Vargon', 'Matériel sanitaire TM — tous types', 'Matériel pour chauffage central'], de: ['Kanalrohre Vargon', 'Sanitärmaterial TM — alle Arten', 'Material für Zentralheizung'] } },
+      desc: { sq: 'Gypa kanalizimi, materiale sanitare dhe ngrohje qendrore.', fr: 'Tuyaux d\'assainissement, matériel sanitaire et chauffage central.', de: 'Kanalrohre, Sanitärmaterial und Zentralheizung.' } },
     { key: 'makina',
       name: { sq: 'Makina pune', fr: 'Machines de travail', de: 'Arbeitsmaschinen' },
-      desc: { sq: 'Makina dhe pajisje pune për kantier dhe punë profesionale.', fr: 'Machines et équipements pour le chantier et le travail professionnel.', de: 'Maschinen und Geräte für Baustelle und professionellen Einsatz.' },
-      items: { sq: ['Makina pune — të ndryshme'], fr: ['Machines de travail — diverses'], de: ['Arbeitsmaschinen — verschiedene'] } }
+      desc: { sq: 'Makina dhe pajisje pune për kantier dhe punë profesionale.', fr: 'Machines et équipements pour le chantier et le travail professionnel.', de: 'Maschinen und Geräte für Baustelle und professionellen Einsatz.' } }
   ];
+
+  var DIM = { sq: 'dimensione të ndryshme', fr: 'diverses dimensions', de: 'verschiedene Abmessungen' };
+  var ALL = { sq: 'të gjitha llojet', fr: 'tous types', de: 'alle Arten' };
+  var VAR = { sq: 'të ndryshme', fr: 'divers', de: 'verschiedene' };
+  function T(s) { return typeof s === 'string' ? { sq: s, fr: s, de: s } : s; }
+  function P(id, cat, icon, name, spec, brand) { return { id: id, cat: cat, icon: icon, name: T(name), spec: spec ? T(spec) : null, brand: brand || null }; }
+
+  var PRODUCTS = [
+    P('cimento-42-5', 'cimento', 'sack', { sq: 'Çimento 42.5 PC', fr: 'Ciment 42.5 PC', de: 'Zement 42.5 PC' }, '25 kg'),
+    P('sharrmall', 'cimento', 'sack', 'Sharrmall', '25 kg', 'Sharrmall'),
+
+    P('bllok-tulltore', 'muratura', 'block', { sq: 'Bllok giter', fr: 'Bloc creux', de: 'Gitterziegel' }, null, 'Tulltore'),
+    P('bllok-rizam', 'muratura', 'block', { sq: 'Bllok giter', fr: 'Bloc creux', de: 'Gitterziegel' }, null, 'Rizam'),
+    P('oxhak-18', 'muratura', 'chimney', { sq: 'Oxhak', fr: 'Conduit de cheminée', de: 'Schornstein' }, 'Ø18'),
+    P('oxhak-16', 'muratura', 'chimney', { sq: 'Oxhak', fr: 'Conduit de cheminée', de: 'Schornstein' }, 'Ø16'),
+    P('oxhak-ngrohje', 'muratura', 'chimneyHeat', { sq: 'Oxhak për ngrohje', fr: 'Cheminée de chauffage', de: 'Heizungsschornstein' }),
+
+    P('hekur', 'hekur', 'rebar', { sq: 'Hekur betoni', fr: 'Fer à béton', de: 'Betonstahl' }, DIM),
+    P('rrjeta-hekuri', 'hekur', 'mesh', { sq: 'Rrjeta hekuri', fr: 'Treillis soudés', de: 'Baustahlmatten' }, DIM),
+    P('kondor', 'hekur', 'beam', 'Kondor', VAR),
+    P('bulona', 'hekur', 'bolt', { sq: 'Bulona metalike', fr: 'Boulons métalliques', de: 'Metallbolzen' }, VAR),
+    P('tipla-betoni', 'hekur', 'anchor', { sq: 'Tipla betoni', fr: 'Chevilles pour béton', de: 'Betondübel' }),
+
+    P('tjegulla-tondach', 'kulm', 'tile', { sq: 'Tjegulla', fr: 'Tuiles', de: 'Dachziegel' }, ALL, 'Tondach'),
+    P('kulmar-tondach', 'kulm', 'ridge', { sq: 'Kulmar', fr: 'Faîtières', de: 'Firstziegel' }, null, 'Tondach'),
+    P('folie-tondach', 'kulm', 'membrane', { sq: 'Folie kulmi', fr: 'Écran de sous-toiture', de: 'Unterdachbahn' }, null, 'Tondach'),
+    P('folie-ventiluese', 'kulm', 'vent', { sq: 'Folie ventiluese për kulmar', fr: 'Closoir ventilé pour faîtage', de: 'Firstlüftungsband' }),
+    P('kapese-kulmaresh', 'kulm', 'clip', { sq: 'Kapëse kulmaresh', fr: 'Crochets de faîtière', de: 'Firstklammern' }),
+    P('tjegulla-creaton', 'kulm', 'tile', { sq: 'Tjegulla', fr: 'Tuiles', de: 'Dachziegel' }, null, 'Creaton'),
+    P('kulmar-creaton', 'kulm', 'ridge', { sq: 'Kulmar', fr: 'Faîtières', de: 'Firstziegel' }, null, 'Creaton'),
+    P('bitolit', 'kulm', 'roll', 'Bitolit'),
+
+    P('styropor', 'izolim', 'board', 'Styropor', DIM),
+    P('ngjites-styropori', 'izolim', 'bucket', { sq: 'Ngjitës për styropor', fr: 'Colles pour polystyrène', de: 'Styroporkleber' }, { sq: 'të ndryshëm', fr: 'diverses', de: 'verschiedene' }),
+    P('styrodur', 'izolim', 'boardXps', 'Styrodur', DIM),
+
+    P('materiale-qeramike', 'qeramike', 'ceramic', { sq: 'Materiale qeramike', fr: 'Matériaux céramiques', de: 'Keramikmaterialien' }),
+    P('ngjites-qeramike', 'qeramike', 'trowel', { sq: 'Ngjitës qeramike & izolime', fr: 'Colles à carrelage & isolations', de: 'Fliesenkleber & Abdichtungen' }),
+
+    P('gewiss', 'elektrik', 'socket', { sq: 'Material elektrik', fr: 'Matériel électrique', de: 'Elektromaterial' }, ALL, 'GEWISS'),
+    P('gypa-elektrike', 'elektrik', 'conduit', { sq: 'Gypa elektrikë', fr: 'Gaines électriques', de: 'Elektro-Installationsrohre' }, DIM),
+
+    P('gypa-vargon', 'sanitari', 'pipe', { sq: 'Gypa kanalizimi', fr: 'Tuyaux d\'assainissement', de: 'Kanalrohre' }, null, 'Vargon'),
+    P('sanitari-tm', 'sanitari', 'faucet', { sq: 'Material sanitar', fr: 'Matériel sanitaire', de: 'Sanitärmaterial' }, ALL, 'TM'),
+    P('ngrohje-qendrore', 'sanitari', 'radiator', { sq: 'Material për ngrohje qendrore', fr: 'Matériel pour chauffage central', de: 'Material für Zentralheizung' }),
+
+    P('makina-pune', 'makina', 'machine', { sq: 'Makina pune', fr: 'Machines de travail', de: 'Arbeitsmaschinen' }, { sq: 'të ndryshme', fr: 'diverses', de: 'verschiedene' })
+  ];
+
+  /* Gjenero listat e kategorive nga produktet (p.sh. "Tjegulla Tondach — të gjitha llojet") */
+  CATEGORIES.forEach(function (c) {
+    var list = PRODUCTS.filter(function (p) { return p.cat === c.key; });
+    c.items = {};
+    ['sq', 'fr', 'de'].forEach(function (lg) {
+      c.items[lg] = list.map(function (p) {
+        var n = p.name[lg];
+        if (p.brand && n.indexOf(p.brand) < 0) n += ' ' + p.brand;
+        return p.spec ? n + ' — ' + p.spec[lg] : n;
+      });
+    });
+  });
 
   var PROCESS = [
     { no: '01', title: { sq: 'Planifikimi', fr: 'Planification', de: 'Planung' }, desc: { sq: 'Kuptojmë nevojat e projektit dhe përcaktojmë çfarë duhet.', fr: 'Nous comprenons les besoins du projet et définissons ce qu\'il faut.', de: 'Wir verstehen die Projektbedürfnisse und legen fest, was benötigt wird.' } },
@@ -187,5 +243,5 @@
       brands: [{ name: 'Caparol' }, { name: 'Jotun' }] }
   ];
 
-  window.CIMI_DATA = { CATEGORIES: CATEGORIES, PROCESS: PROCESS, PROJECTS: PROJECTS, FIELD: FIELD, GALLERY: GALLERY, PARTNERS_FEATURED: PARTNERS_FEATURED, BRAND_GROUPS: BRAND_GROUPS };
+  window.CIMI_DATA = { CATEGORIES: CATEGORIES, PRODUCTS: PRODUCTS, PROCESS: PROCESS, PROJECTS: PROJECTS, FIELD: FIELD, GALLERY: GALLERY, PARTNERS_FEATURED: PARTNERS_FEATURED, BRAND_GROUPS: BRAND_GROUPS };
 })();

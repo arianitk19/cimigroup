@@ -31,6 +31,6 @@
 
   window.H = { PH: PH, esc: esc, L: L, t: t, img: img, ARROW: ARROW,
     CONTACT: { tel: '044425968', telDisplay: '044 425 968', email: 'besim.hoti@hotmail.com', address: 'Rruga Visar Hoti, Ratkoc, Kosovë' },
-    ROUTES: ['ballina', 'projekte', 'materialet', 'partneret', 'terren', 'galeri', 'lokacioni', 'kontakti']
+    ROUTES: ['ballina', 'dyqani', 'projekte', 'materialet', 'partneret', 'terren', 'galeri', 'lokacioni', 'kontakti']
   };
 })();

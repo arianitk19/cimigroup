@@ -59,8 +59,8 @@
         '<p class="eyebrow" data-reveal>' + esc(t('hero.eyebrow')) + '</p>' +
         '<h1 class="hero-title" data-reveal>' + esc(t('hero.t1')) + '<br><span class="text-accent">' + esc(t('hero.accent')) + '</span></h1>' +
         '<p class="hero-sub" data-reveal>' + esc(t('hero.sub')) + '</p>' +
-        '<div class="hero-cta" data-reveal><a href="' + href('projekte') + '" class="btn btn-primary" data-route="projekte">' + esc(t('cta.shiko')) + ARROW + '</a>' +
-        '<a href="' + href('kontakti') + '" class="btn btn-outline" data-route="kontakti">' + esc(t('cta.nakontakto')) + '</a></div>' +
+        '<div class="hero-cta" data-reveal><a href="#/dyqani" class="btn btn-primary btn-shop" data-route="dyqani">' + (H.BAG || '') + esc(t('shop.open')) + ARROW + '</a>' +
+        '<a href="' + href('projekte') + '" class="btn btn-outline" data-route="projekte">' + esc(t('cta.shiko')) + '</a></div>' +
       '</div>' +
       '<a href="' + href('materialet') + '" class="hero-scroll" data-route="materialet" aria-label="Zbrit"><span class="hero-scroll-line"></span></a>' +
     '</section>';
@@ -104,7 +104,8 @@
       '<div class="material-illus">' + window.MATERIAL_ART(c.key) +
         '<span class="material-index" aria-hidden="true">' + ('0' + (i + 1)).slice(-2) + '</span>' +
         '<span class="material-count">' + esc(count) + '</span></div>' +
-      '<div class="material-body"><h3 class="material-name">' + catName(L(c.name)) + '</h3><p class="material-desc">' + esc(L(c.desc)) + '</p><ul class="material-items">' + items + '</ul></div>' +
+      '<div class="material-body"><h3 class="material-name">' + catName(L(c.name)) + '</h3><p class="material-desc">' + esc(L(c.desc)) + '</p><ul class="material-items">' + items + '</ul>' +
+        '<a href="#/dyqani?k=' + c.key + '" class="material-cta">' + esc(t('shop.viewProducts')) + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>' +
     '</article>';
   }
   function materialsSection(limit, showCta) {
@@ -112,7 +113,7 @@
     return '<section class="section section--alt"><div class="container-x">' +
       '<div class="section-head"><div><p class="eyebrow" data-reveal>' + esc(t('materials.eyebrow')) + '</p><h2 class="section-title" data-reveal>' + esc(t('materials.title')) + '</h2></div><p class="section-note" data-reveal>' + esc(t('materials.note')) + '</p></div>' +
       '<div class="materials-grid reveal-stagger">' + list.map(materialCard).join('') + '</div>' +
-      (showCta ? '<div style="margin-top:34px" data-reveal><a href="' + href('materialet') + '" class="btn btn-ghost" data-route="materialet">' + esc(t('materials.viewAll')) + ARROW + '</a></div>' : '') +
+      (showCta ? '<div class="cta-row" data-reveal><a href="#/dyqani" class="btn btn-primary btn-shop" data-route="dyqani">' + (H.BAG || '') + esc(t('shop.open')) + ARROW + '</a><a href="' + href('materialet') + '" class="btn btn-ghost" data-route="materialet">' + esc(t('materials.viewAll')) + '</a></div>' : '') +
     '</div></section>';
   }
 

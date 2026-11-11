@@ -5,22 +5,20 @@
 (function () {
   'use strict';
   var H = window.H, esc = H.esc, t = H.t, L = H.L, D = window.CIMI_DATA;
-  var NAV_MAIN = ['projekte', 'materialet', 'partneret', 'terren', 'galeri', 'lokacioni'];
+  var NAV_MAIN = ['projekte', 'materialet', 'partneret', 'terren', 'galeri'];
   var NAV_ALL = H.ROUTES;
   var LOGO = 'assets/branding/logo/logo-full.png';
   var MAPS = 'https://maps.app.goo.gl/Mya1HP1UUDJu8RuZ9';
-  var CTA_MQ = '(min-width:1280px)';
   /* Foto që shfaqet në menu kur kalon mbi secilën faqe (desktop) */
   var PREVIEW = {
-    ballina: 'assets/gallery/gallery-09.jpg', projekte: 'assets/projects/qtx-05.jpg', materialet: 'assets/gallery/gallery-02.jpg',
-    partneret: 'assets/gallery/gallery-08.jpg', terren: 'assets/field-work/field-04.jpg', galeri: 'assets/gallery/gallery-01.jpg',
+    ballina: 'assets/gallery/gallery-09.jpg', dyqani: 'assets/gallery/gallery-08.jpg', projekte: 'assets/projects/qtx-05.jpg', materialet: 'assets/gallery/gallery-02.jpg',
+    partneret: 'assets/gallery/gallery-14.jpg', terren: 'assets/field-work/field-04.jpg', galeri: 'assets/gallery/gallery-01.jpg',
     lokacioni: 'assets/gallery/gallery-10.jpg', kontakti: 'assets/gallery/gallery-05.jpg'
   };
 
   function href(route) { return '#/' + (route === 'ballina' ? '' : route); }
   function pad(n) { return ('0' + n).slice(-2); }
   function chevron() { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>'; }
-  function globe() { return '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18"/></svg>'; }
   var ARROW_LG = '<svg class="ml-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
   var ARROW_UR = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>';
 
@@ -40,26 +38,28 @@
       return '<button type="button" class="lang-option' + (l.code === lang ? ' is-active' : '') + '" data-lang="' + l.code + '"><span class="lang-flag">' + l.flag + '</span>' + esc(l.label) + '</button>';
     }).join('');
     var curr = window.I18N.langs.filter(function (l) { return l.code === lang; })[0];
+    var qn = window.Shop ? window.Shop.count() : 0;
     header.innerHTML =
       '<div class="container-x">' +
         '<a href="#/" class="brand" data-route="ballina" aria-label="Cimi Group SA"><img src="' + LOGO + '" alt="Cimi Group SA" class="brand-logo"></a>' +
         '<nav class="main-nav" aria-label="Navigimi kryesor">' + nav + '</nav>' +
         '<div class="header-actions">' +
           '<div class="lang-switch" data-lang-switch>' +
-            '<button type="button" class="lang-btn" data-lang-toggle aria-haspopup="true" aria-expanded="false">' + globe() + '<span>' + curr.flag + '</span>' + chevron() + '</button>' +
+            '<button type="button" class="lang-btn" data-lang-toggle aria-haspopup="true" aria-expanded="false" aria-label="' + esc(t('menu.lang')) + '">' + curr.flag + chevron() + '</button>' +
             '<div class="lang-menu" role="menu">' + langOpts + '</div>' +
           '</div>' +
-          '<a href="#/kontakti" class="btn btn-primary btn-sm header-cta" data-route="kontakti" style="display:none" data-desktop-cta>' + esc(t('nav.kontakti')) + '</a>' +
+          '<a href="#/dyqani" class="shop-btn" data-route="dyqani" data-shop-btn aria-label="' + esc(t('nav.dyqani')) + '">' +
+            '<span class="shop-btn__ico">' + (H.BAG || '') + '<span class="shop-btn__count" data-quote-count' + (qn ? '' : ' hidden') + '>' + qn + '</span></span>' +
+            '<span class="shop-btn__txt"><b>' + esc(t('nav.dyqani')) + '</b><small>' + D.PRODUCTS.length + ' ' + esc(t('shop.products')) + '</small></span>' +
+          '</a>' +
           '<button type="button" class="menu-toggle" data-menu-toggle aria-expanded="' + isOpen + '" aria-controls="mobile-drawer" aria-label="' + esc(t(isOpen ? 'menu.close' : 'menu.open')) + '">' +
             '<span class="mt-label" aria-hidden="true"><span>' + esc(t('menu.open')) + '</span><span>' + esc(t('menu.close')) + '</span></span>' +
             '<span class="mt-icon" aria-hidden="true"><i></i><i></i></span>' +
           '</button>' +
         '</div>' +
       '</div>';
-    syncCta();
     bindHeader();
   }
-  function syncCta() { var cta = header.querySelector('[data-desktop-cta]'); if (cta) cta.style.display = window.matchMedia(CTA_MQ).matches ? 'inline-flex' : 'none'; }
 
   function bindHeader() {
     var toggle = header.querySelector('[data-lang-toggle]');
@@ -78,7 +78,6 @@
 
   function onScroll() { if (window.scrollY > 36) header.classList.add('is-scrolled'); else header.classList.remove('is-scrolled'); }
   window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', syncCta);
 
   /* ---------- MEGA MENU ---------- */
   function buildMenu() {
@@ -86,21 +85,20 @@
     var links = NAV_ALL.map(function (r, i) {
       return '<a href="' + href(r) + '" class="mega-link" data-route="' + r + '" data-menu-close style="--i:' + i + '">' +
         '<span class="ml-no">' + pad(i + 1) + '</span>' +
-        '<span class="ml-mask"><span class="ml-label">' + esc(t('nav.' + r)) + '</span></span>' +
+        '<span class="ml-mask"><span class="ml-label">' + esc(t('nav.' + r)) + (r === 'dyqani' ? '<sup class="ml-badge">' + D.PRODUCTS.length + '</sup>' : '') + '</span></span>' +
         '<span class="ml-here">' + esc(t('menu.here')) + '</span>' + ARROW_LG + '</a>';
     }).join('');
     var previews = NAV_ALL.map(function (r) {
       return '<img src="' + PREVIEW[r] + '" alt="" data-preview="' + r + '" data-ph="wide" loading="lazy" decoding="async">';
     }).join('');
     var cats = D.CATEGORIES.map(function (c, i) {
-      return '<li><a href="#/materialet" data-menu-close><span class="mc-no">' + pad(i + 1) + '</span><span class="mc-name">' + esc(L(c.name)) + '</span><span class="mc-count">' + L(c.items).length + '</span></a></li>';
+      return '<li><a href="#/dyqani?k=' + c.key + '" data-menu-close><span class="mc-no">' + pad(i + 1) + '</span><span class="mc-name">' + esc(L(c.name)) + '</span><span class="mc-count">' + L(c.items).length + '</span></a></li>';
     }).join('');
     var langBtns = window.I18N.langs.map(function (l) {
       return '<button type="button" data-lang="' + l.code + '" class="' + (l.code === lang ? 'is-active' : '') + '" aria-label="' + esc(l.label) + '">' + l.flag + '</button>';
     }).join('');
 
     menu.innerHTML =
-      '<div class="mega-shutters" aria-hidden="true"><span style="--s:0"></span><span style="--s:1"></span><span style="--s:2"></span><span style="--s:3"></span></div>' +
       '<div class="mega-bg" aria-hidden="true"><span class="mega-bignum" data-bignum>01</span></div>' +
       '<div class="mega-scroll" data-mega-scroll>' +
         '<div class="container-x mega-inner">' +
@@ -149,8 +147,8 @@
   menu.addEventListener('focusin', function (e) { var a = e.target.closest('.mega-link'); if (a) showPreview(a.dataset.route); });
   menu.addEventListener('mouseleave', function () { showPreview(currentRoute()); });
 
-  /* Bllokimi i scroll-it: overflow menjëherë; body:fixed (për iOS) vetëm pasi grilat
-     e kanë mbuluar ekranin — kështu asnjë "kërcim" nuk shihet. */
+  /* Bllokimi i scroll-it: overflow menjëherë; body:fixed (për iOS) vetëm pasi sfondi
+     i menusë është bërë i plotë — kështu asnjë "kërcim" nuk shihet. */
   function lock() {
     var sb = window.innerWidth - root.clientWidth;
     root.classList.add('drawer-lock', 'menu-open');
@@ -161,7 +159,7 @@
       savedY = window.scrollY;
       document.body.style.position = 'fixed'; document.body.style.top = -savedY + 'px'; document.body.style.width = '100%';
       bodyLocked = true;
-    }, 900);
+    }, 420);
   }
   function unlock() {
     clearTimeout(lockTimer);
@@ -223,6 +221,7 @@
 
   function setActive(route) {
     document.querySelectorAll('.nav-link').forEach(function (l) { l.classList.toggle('is-active', l.dataset.route === route); });
+    document.querySelectorAll('[data-shop-btn]').forEach(function (b) { b.classList.toggle('is-active', route === 'dyqani'); });
     document.querySelectorAll('.mega-link').forEach(function (l) {
       var on = l.dataset.route === route;
       l.classList.toggle('is-active', on);

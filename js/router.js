@@ -28,6 +28,7 @@
     if (window.Chrome) window.Chrome.setActive(route);
     setTitle(route);
     if (window.FX) window.FX.afterRender(route);
+    if (window.Shop) window.Shop.afterRender(route);
     current = route;
   }
 

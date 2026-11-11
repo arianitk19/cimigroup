@@ -12,7 +12,7 @@
 
   const DICT = {
     sq: {
-      nav: { ballina: 'Ballina', projekte: 'Projekte', materialet: 'Materialet', partneret: 'Firmat që punojmë', terren: 'Puna në terren', galeri: 'Galeri', lokacioni: 'Lokacioni', kontakti: 'Kontakti' },
+      nav: { ballina: 'Ballina', dyqani: 'Dyqani', projekte: 'Projekte', materialet: 'Materialet', partneret: 'Firmat që punojmë', terren: 'Puna në terren', galeri: 'Galeri', lokacioni: 'Lokacioni', kontakti: 'Kontakti' },
       cta: { shiko: 'Shiko projektet', nakontakto: 'Na kontakto', shikoProjektin: 'Shiko projektin', telefono: 'Telefono', pwa: 'Instalo aplikacionin' },
       hero: { eyebrow: 'Cimi Group SA · Ratkoc, Kosovë', t1: 'Nga fillimi,', accent: 'deri në përfundim.', sub: 'Cimi Group SA ofron materiale ndërtimore, zgjidhje profesionale dhe mbështetje në terren për projekte të ndryshme ndërtimore.' },
       trust: { a: 'Materiale të përzgjedhura', b: 'Produkte europiane', c: 'Zgjidhje profesionale', d: 'Mbështetje në terren' },
@@ -31,11 +31,12 @@
       footer: { desc: 'Materiale, zgjidhje dhe mbështetje për projekte ndërtimore.', menu: 'Menuja', kontakti: 'Kontakti', rights: 'Të gjitha të drejtat e rezervuara.' },
       brands: { note: 'Prodhues dhe marka europiane sipas fushave' },
       menu: { open: 'Menu', close: 'Mbyll', nav: 'Navigimi', cats: 'Kategoritë e materialeve', contact: 'Na kontaktoni', lang: 'Gjuha', here: 'Je këtu', maps: 'Hap në hartë', tagline: 'Nga fillimi, deri në përfundim.' },
+      shop: { eyebrow: 'Katalogu i produkteve', title: 'Dyqani', intro: 'Të gjitha produktet që ofron Cimi Group SA — nga çimento dhe hekuri te kulmi, izolimi, elektrika dhe sanitaria. Zgjidhni produktet dhe na dërgoni kërkesë për ofertë.', search: 'Kërko produkt, markë ose kategori…', all: 'Të gjitha', products: 'produkte', product: 'produkt', cats: 'kategori', brands: 'marka', showing: 'Duke shfaqur', of: 'nga', add: 'Shto në ofertë', added: 'Në listë', onRequest: 'Sipas kërkesës', empty: 'Nuk u gjet asnjë produkt.', emptyHint: 'Provoni një fjalë tjetër ose zgjidhni «Të gjitha».', clear: 'Pastro kërkimin', note: 'Çmimet dhe disponueshmëria konfirmohen nga ekipi ynë.', list: 'Lista e ofertës', listEyebrow: 'Kërkesë për ofertë', listEmpty: 'Lista është bosh. Shtoni produkte nga dyqani.', inList: 'në listë', view: 'Shiko listën', send: 'Vazhdo me kërkesën', clearList: 'Pastro listën', qty: 'Sasia', msgIntro: 'Përshëndetje, kërkoj ofertë për këto produkte:', viewProducts: 'Shiko produktet', open: 'Hap dyqanin', remove: 'Hiq', no: 'Nr.' },
       home: 'Ballina'
     },
 
     fr: {
-      nav: { ballina: 'Accueil', projekte: 'Projets', materialet: 'Matériaux', partneret: 'Nos marques', terren: 'Sur chantier', galeri: 'Galerie', lokacioni: 'Emplacement', kontakti: 'Contact' },
+      nav: { ballina: 'Accueil', dyqani: 'Boutique', projekte: 'Projets', materialet: 'Matériaux', partneret: 'Nos marques', terren: 'Sur chantier', galeri: 'Galerie', lokacioni: 'Emplacement', kontakti: 'Contact' },
       cta: { shiko: 'Voir les projets', nakontakto: 'Contactez-nous', shikoProjektin: 'Voir le projet', telefono: 'Appeler', pwa: 'Installer l\'application' },
       hero: { eyebrow: 'Cimi Group SA · Ratkoc, Kosovo', t1: 'Du début,', accent: 'jusqu\'à l\'achèvement.', sub: 'Cimi Group SA fournit des matériaux de construction, des solutions professionnelles et un accompagnement sur chantier pour divers projets de construction.' },
       trust: { a: 'Matériaux sélectionnés', b: 'Produits européens', c: 'Solutions professionnelles', d: 'Accompagnement sur chantier' },
@@ -54,11 +55,12 @@
       footer: { desc: 'Matériaux, solutions et accompagnement pour projets de construction.', menu: 'Menu', kontakti: 'Contact', rights: 'Tous droits réservés.' },
       brands: { note: 'Fabricants et marques européens par domaine' },
       menu: { open: 'Menu', close: 'Fermer', nav: 'Navigation', cats: 'Catégories de matériaux', contact: 'Contactez-nous', lang: 'Langue', here: 'Vous êtes ici', maps: 'Ouvrir la carte', tagline: 'Du début, jusqu\'à l\'achèvement.' },
+      shop: { eyebrow: 'Catalogue des produits', title: 'Boutique', intro: "Tous les produits proposés par Cimi Group SA — du ciment et du fer à la toiture, l'isolation, l'électricité et le sanitaire. Sélectionnez vos produits et envoyez-nous une demande de devis.", search: 'Rechercher un produit, une marque ou une catégorie…', all: 'Tous', products: 'produits', product: 'produit', cats: 'catégories', brands: 'marques', showing: 'Affichage de', of: 'sur', add: 'Ajouter au devis', added: 'Dans la liste', onRequest: 'Sur demande', empty: 'Aucun produit trouvé.', emptyHint: 'Essayez un autre mot ou choisissez « Tous ».', clear: 'Effacer la recherche', note: 'Les prix et la disponibilité sont confirmés par notre équipe.', list: 'Liste de devis', listEyebrow: 'Demande de devis', listEmpty: 'La liste est vide. Ajoutez des produits depuis la boutique.', inList: 'dans la liste', view: 'Voir la liste', send: 'Continuer la demande', clearList: 'Vider la liste', qty: 'Quantité', msgIntro: 'Bonjour, je souhaite un devis pour les produits suivants :', viewProducts: 'Voir les produits', open: 'Ouvrir la boutique', remove: 'Retirer', no: 'N°' },
       home: 'Accueil'
     },
 
     de: {
-      nav: { ballina: 'Startseite', projekte: 'Projekte', materialet: 'Materialien', partneret: 'Unsere Marken', terren: 'Vor Ort', galeri: 'Galerie', lokacioni: 'Standort', kontakti: 'Kontakt' },
+      nav: { ballina: 'Startseite', dyqani: 'Shop', projekte: 'Projekte', materialet: 'Materialien', partneret: 'Unsere Marken', terren: 'Vor Ort', galeri: 'Galerie', lokacioni: 'Standort', kontakti: 'Kontakt' },
       cta: { shiko: 'Projekte ansehen', nakontakto: 'Kontakt aufnehmen', shikoProjektin: 'Projekt ansehen', telefono: 'Anrufen', pwa: 'App installieren' },
       hero: { eyebrow: 'Cimi Group SA · Ratkoc, Kosovo', t1: 'Vom Anfang,', accent: 'bis zur Fertigstellung.', sub: 'Cimi Group SA liefert Baumaterialien, professionelle Lösungen und Unterstützung vor Ort für verschiedene Bauprojekte.' },
       trust: { a: 'Ausgewählte Materialien', b: 'Europäische Produkte', c: 'Professionelle Lösungen', d: 'Unterstützung vor Ort' },
@@ -77,6 +79,7 @@
       footer: { desc: 'Materialien, Lösungen und Unterstützung für Bauprojekte.', menu: 'Menü', kontakti: 'Kontakt', rights: 'Alle Rechte vorbehalten.' },
       brands: { note: 'Europäische Hersteller und Marken nach Bereich' },
       menu: { open: 'Menü', close: 'Schließen', nav: 'Navigation', cats: 'Materialkategorien', contact: 'Kontakt', lang: 'Sprache', here: 'Sie sind hier', maps: 'Karte öffnen', tagline: 'Vom Anfang bis zur Fertigstellung.' },
+      shop: { eyebrow: 'Produktkatalog', title: 'Shop', intro: 'Alle Produkte von Cimi Group SA — von Zement und Stahl bis Dach, Dämmung, Elektrik und Sanitär. Wählen Sie Ihre Produkte und senden Sie uns eine Angebotsanfrage.', search: 'Produkt, Marke oder Kategorie suchen…', all: 'Alle', products: 'Produkte', product: 'Produkt', cats: 'Kategorien', brands: 'Marken', showing: 'Angezeigt:', of: 'von', add: 'Zum Angebot', added: 'In der Liste', onRequest: 'Auf Anfrage', empty: 'Kein Produkt gefunden.', emptyHint: 'Versuchen Sie ein anderes Wort oder wählen Sie „Alle“.', clear: 'Suche löschen', note: 'Preise und Verfügbarkeit bestätigt unser Team.', list: 'Angebotsliste', listEyebrow: 'Angebotsanfrage', listEmpty: 'Die Liste ist leer. Fügen Sie Produkte aus dem Shop hinzu.', inList: 'in der Liste', view: 'Liste ansehen', send: 'Anfrage fortsetzen', clearList: 'Liste leeren', qty: 'Menge', msgIntro: 'Guten Tag, ich bitte um ein Angebot für folgende Produkte:', viewProducts: 'Produkte ansehen', open: 'Zum Shop', remove: 'Entfernen', no: 'Nr.' },
       home: 'Startseite'
     }
   };
