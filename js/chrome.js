@@ -91,6 +91,17 @@
     var previews = NAV_ALL.map(function (r) {
       return '<img src="' + PREVIEW[r] + '" alt="" data-preview="' + r + '" data-ph="wide" loading="lazy" decoding="async">';
     }).join('');
+    /* Menuja në telefon: pak zëra, të mëdhenj; pjesa tjetër në një grup që hapet */
+    var M_TOP = ['dyqani', 'projekte', 'materialet', 'partneret'], M_MORE = ['terren', 'galeri', 'lokacioni'];
+    var M_ARROW = '<svg class="m-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+    function mItem(r, i) {
+      return '<li style="--i:' + i + '"><a href="' + href(r) + '" class="m-link" data-route="' + r + '" data-menu-close><span>' + esc(t('nav.' + r)) +
+        (r === 'dyqani' ? '<sup class="ml-badge">' + D.PRODUCTS.length + '</sup>' : '') + '</span>' + M_ARROW + '</a></li>';
+    }
+    var mnav = '<nav class="mega-mnav" aria-label="Menu"><ul class="m-list">' + M_TOP.map(mItem).join('') +
+      '<li style="--i:' + M_TOP.length + '"><button type="button" class="m-link" data-acc data-group="' + M_MORE.join(' ') + '" aria-expanded="false" aria-controls="m-more"><span>' + esc(t('menu.more')) + '</span><i class="m-plus" aria-hidden="true"></i></button>' +
+        '<div class="m-panel" id="m-more"><div>' + M_MORE.map(function (r) { return '<a href="' + href(r) + '" data-route="' + r + '" data-menu-close>' + esc(t('nav.' + r)) + '</a>'; }).join('') + '</div></div></li>' +
+      mItem('kontakti', M_TOP.length + 1) + '</ul></nav>';
     var cats = D.CATEGORIES.map(function (c, i) {
       return '<li><a href="#/dyqani?k=' + c.key + '" data-menu-close><span class="mc-no">' + pad(i + 1) + '</span><span class="mc-name">' + esc(L(c.name)) + '</span><span class="mc-count">' + L(c.items).length + '</span></a></li>';
     }).join('');
@@ -103,11 +114,11 @@
       '<div class="mega-scroll" data-mega-scroll>' +
         '<div class="container-x mega-inner">' +
           '<div class="mega-grid">' +
-            '<nav class="mega-nav" aria-label="Menu"><p class="mega-label">' + esc(t('menu.nav')) + '</p>' + links + '</nav>' +
+            '<nav class="mega-nav" aria-label="Menu"><p class="mega-label">' + esc(t('menu.nav')) + '</p>' + links + '</nav>' + mnav +
             '<div class="mega-side">' +
               '<figure class="mega-preview" aria-hidden="true">' + previews + '<figcaption class="mp-cap"><span class="mp-dot"></span><span data-preview-cap></span></figcaption></figure>' +
               '<div class="mega-cols">' +
-                '<div class="mega-block"><p class="mega-label">' + esc(t('menu.cats')) + '</p><ul class="mega-cats">' + cats + '</ul></div>' +
+                '<div class="mega-block mega-block--cats"><p class="mega-label">' + esc(t('menu.cats')) + '</p><ul class="mega-cats">' + cats + '</ul></div>' +
                 '<div class="mega-block">' +
                   '<p class="mega-label">' + esc(t('menu.contact')) + '</p>' +
                   '<a href="tel:' + H.CONTACT.tel + '" class="mega-tel">' + H.CONTACT.telDisplay + '</a>' +
@@ -141,6 +152,8 @@
   menu.addEventListener('click', function (e) {
     var lb = e.target.closest('[data-lang]');
     if (lb) { window.I18N.set(lb.dataset.lang); return; }
+    var acc = e.target.closest('[data-acc]');
+    if (acc) { acc.setAttribute('aria-expanded', acc.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'); return; }
     if (e.target.closest('[data-menu-close]')) closeMenu();
   });
   menu.addEventListener('mouseover', function (e) { var a = e.target.closest('.mega-link'); if (a) showPreview(a.dataset.route); });
@@ -182,6 +195,7 @@
     lock();
     var sc = menu.querySelector('[data-mega-scroll]'); if (sc) sc.scrollTop = 0;
     showPreview(currentRoute());
+    menu.querySelectorAll('[data-acc]').forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
     menu.setAttribute('aria-hidden', 'false');
     menu.classList.add('is-open');
     syncToggle();
@@ -222,6 +236,11 @@
   function setActive(route) {
     document.querySelectorAll('.nav-link').forEach(function (l) { l.classList.toggle('is-active', l.dataset.route === route); });
     document.querySelectorAll('[data-shop-btn]').forEach(function (b) { b.classList.toggle('is-active', route === 'dyqani'); });
+    document.querySelectorAll('.m-link, .m-panel a').forEach(function (l) {
+      var on = l.dataset.route === route || (l.dataset.group || '').split(' ').indexOf(route) >= 0;
+      l.classList.toggle('is-active', on);
+      if (on && l.dataset.route) l.setAttribute('aria-current', 'page'); else l.removeAttribute('aria-current');
+    });
     document.querySelectorAll('.mega-link').forEach(function (l) {
       var on = l.dataset.route === route;
       l.classList.toggle('is-active', on);

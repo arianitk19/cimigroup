@@ -57,13 +57,18 @@
   var ovContent = ov.querySelector('[data-project-content]');
   var ovFocus = null;
   function renderProject(p) {
-    var meta = [];
-    if (L(p.category)) meta.push('<span><b>' + esc(t('project.kategoria')) + '</b> ' + esc(L(p.category)) + '</span>');
-    if (L(p.location)) meta.push('<span><b>' + esc(t('project.lokacioni')) + '</b> ' + esc(L(p.location)) + '</span>');
-    if (p.year) meta.push('<span><b>' + esc(t('project.viti')) + '</b> ' + esc(p.year) + '</span>');
+    var n = 1 + (p.gallery ? p.gallery.length : 0);
+    var facts = [];
+    if (L(p.location)) facts.push('<div><span>' + esc(t('project.lokacioni')) + '</span><b>' + esc(L(p.location)) + '</b></div>');
+    if (p.year) facts.push('<div><span>' + esc(t('project.viti')) + '</span><b>' + esc(p.year) + '</b></div>');
     var mats = (L(p.materials) && L(p.materials).length) ? '<p class="panel-section-label">' + esc(t('project.materialet')) + '</p><div class="panel-materials">' + L(p.materials).map(function (m) { return '<span class="panel-chip">' + esc(m) + '</span>'; }).join('') + '</div>' : '';
-    var gal = (p.gallery && p.gallery.length) ? '<p class="panel-section-label">' + esc(t('project.galeria')) + '</p><div class="panel-gallery" data-panel-gallery>' + p.gallery.map(function (g) { return H.img(g, L(p.title), 'wide'); }).join('') + '</div>' : '';
-    ovContent.innerHTML = '<div class="panel-hero">' + H.img(p.image, L(p.title), p.ratio) + '</div><div class="panel-body"><span class="panel-cat">' + esc(L(p.category)) + '</span><h2 class="panel-title">' + esc(L(p.title)) + '</h2>' + (meta.length ? '<div class="panel-meta">' + meta.join('') + '</div>' : '') + '<p class="panel-desc">' + esc(L(p.description) || L(p.excerpt)) + '</p>' + mats + gal + '</div>';
+    var gal = (p.gallery && p.gallery.length) ? '<p class="panel-section-label">' + esc(t('project.galeria')) + '<i>' + p.gallery.length + '</i></p><div class="panel-gallery">' + p.gallery.map(function (g) { return H.img(g, L(p.title), 'portrait', ' data-lb'); }).join('') + '</div>' : '';
+    ovContent.innerHTML = '<div class="panel-hero"><img class="ph-bg" src="' + esc(p.image) + '" alt="" aria-hidden="true">' + H.img(p.image, L(p.title), p.ratio, ' class="ph-main" data-lb') +
+      '<span class="ph-count"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 16l5-5 4 4 3-3 6 6"/></svg>' + n + '</span></div>' +
+      '<div class="panel-body"><span class="panel-cat">' + esc(L(p.category)) + '</span><h2 class="panel-title">' + esc(L(p.title)) + '</h2>' +
+      (facts.length ? '<div class="panel-facts">' + facts.join('') + '</div>' : '') +
+      '<p class="panel-desc">' + esc(L(p.description) || L(p.excerpt)) + '</p>' + mats + gal + '</div>';
+    var panel = ov.querySelector('.project-panel'); if (panel) panel.scrollTop = 0;
   }
   function openProject(p) {
     ovFocus = document.activeElement; renderProject(p); ov.hidden = false;
@@ -109,8 +114,8 @@
     var fi = e.target.closest('.field-item');
     if (fi) { var fl = D.FIELD.map(function (f) { return { src: f.image, caption: L(f.caption), ratio: f.ratio }; }); openLB(fl, +fi.dataset.fieldIndex); return; }
     // panel gallery image
-    var pg = e.target.closest('[data-panel-gallery] img');
-    if (pg) { var imgs = Array.prototype.slice.call(pg.closest('[data-panel-gallery]').querySelectorAll('img')); openLB(imgs.map(function (im) { return { src: im.currentSrc || im.src, caption: im.alt, ratio: 'wide' }; }), imgs.indexOf(pg)); return; }
+    var pg = e.target.closest('.project-panel img[data-lb]');
+    if (pg) { var imgs = Array.prototype.slice.call(ovContent.querySelectorAll('img[data-lb]')); openLB(imgs.map(function (im) { return { src: im.currentSrc || im.src, caption: im.alt, ratio: 'wide' }; }), imgs.indexOf(pg)); return; }
   });
   // field keyboard
   document.addEventListener('keydown', function (e) {

@@ -188,7 +188,7 @@
     return '<section class="section section--alt"><div class="container-x">' +
       '<div class="section-head"><div><p class="eyebrow" data-reveal>' + esc(t('field.eyebrow')) + '</p><h2 class="section-title" data-reveal>' + esc(t('field.title')) + '</h2></div><p class="section-note" data-reveal>' + esc(t('field.note')) + '</p></div>' +
       '<div class="field-grid">' + D.FIELD.map(function (f, i) {
-        return '<figure class="field-item size-' + esc(f.size) + '" data-reveal data-field-index="' + i + '" tabindex="0" role="button" aria-label="' + esc(L(f.caption)) + '">' + img(f.image, L(f.caption), f.ratio) + '<figcaption class="field-cap">' + esc(L(f.caption)) + '</figcaption></figure>';
+        return '<figure class="field-item' + (f.ratio === 'wide' ? ' is-wide' : '') + '" data-reveal data-field-index="' + i + '" tabindex="0" role="button" aria-label="' + esc(L(f.caption)) + '">' + img(f.image, L(f.caption), f.ratio) + '<span class="field-no" aria-hidden="true">' + ('0' + (i + 1)).slice(-2) + '</span><figcaption class="field-cap">' + esc(L(f.caption)) + '</figcaption></figure>';
       }).join('') + '</div>' +
       (showCta ? '<div style="margin-top:34px" data-reveal><a href="' + href('terren') + '" class="btn btn-ghost" data-route="terren">' + esc(t('field.viewAll')) + ARROW + '</a></div>' : '') +
     '</div></section>';
@@ -198,7 +198,7 @@
     var cats = [{ id: 'all', k: 'f_all' }, { id: 'projekte', k: 'f_projekte' }, { id: 'struktura', k: 'f_struktura' }, { id: 'furnizim', k: 'f_furnizim' }, { id: 'materiale', k: 'f_materiale' }, { id: 'produkte', k: 'f_produkte' }];
     var filters = cats.map(function (c, i) { return '<button type="button" class="gallery-filter' + (i === 0 ? ' is-active' : '') + '" data-filter="' + c.id + '">' + esc(t('gallery.' + c.k)) + '</button>'; }).join('');
     var items = D.GALLERY.map(function (g, i) {
-      return '<button type="button" class="gallery-item" data-gallery-index="' + i + '" data-cat="' + esc(g.cat) + '" aria-label="' + esc(L(g.caption)) + '">' + img(g.image, L(g.caption), g.ratio) + '<span class="gallery-item__cap">' + esc(L(g.caption)) + '</span></button>';
+      return '<button type="button" class="gallery-item" data-gallery-index="' + i + '" data-cat="' + esc(g.cat) + '" aria-label="' + esc(L(g.caption)) + '">' + img(g.image, L(g.caption), g.ratio, ' style="aspect-ratio:' + (g.ratio === 'wide' ? '4/3' : '3/4') + '"') + '<span class="gallery-item__cap">' + esc(L(g.caption)) + '</span></button>';
     }).join('');
     return '<section class="section"><div class="container-x">' +
       '<div class="section-head"><div class="gallery-filters" data-gallery-filters role="tablist">' + filters + '</div></div>' +
@@ -264,7 +264,7 @@
 
   /* ------- VIEWS ------- */
   var Views = {
-    ballina: function () { return hero() + trust() + about() + materialsSection(6, true) + processSection() + projectsSection(3, true) + partnersSection(true) + fieldSection(true) + finalCta(); },
+    ballina: function () { return hero() + trust() + about() + materialsSection(6, true) + processSection() + projectsSection(4, true) + partnersSection(true) + fieldSection(true) + finalCta(); },
     projekte: function () { return pageHeader('projekte', 'projects.eyebrow', 'projects.note') + projectsSection(0, false) + finalCta(); },
     materialet: function () { return pageHeader('materialet', 'materials.eyebrow', 'materials.note') + materialsSection(0, false) + processSection() + finalCta(); },
     partneret: function () { return pageHeader('partneret', 'partners.eyebrow', 'partners.note') + partnersSection(false) + finalCta(); },
