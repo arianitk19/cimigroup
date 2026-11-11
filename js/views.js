@@ -154,7 +154,7 @@
   function brandSlug(n) { return n.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
   function brandGroups() {
     return D.BRAND_GROUPS.map(function (grp) {
-      var chips = grp.brands.map(function (b) { return '<div class="brand-chip' + (b.featured ? ' is-featured' : '') + '"><img class="brand-logo-img" src="assets/brands/' + brandSlug(b.name) + '.svg" alt="' + esc(b.name) + '" data-ph="brand" loading="lazy"></div>'; }).join('');
+      var chips = grp.brands.map(function (b) { return '<div class="brand-chip' + (b.featured ? ' is-featured' : '') + '"><img class="brand-logo-img" src="' + H.brandLogo(b.name) + '" alt="' + esc(b.name) + '" data-ph="brand" loading="lazy"></div>'; }).join('');
       return '<div class="brand-group" data-reveal>' +
         '<div class="brand-group__head"><span class="brand-group__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="' + grp.icon + '"/></svg></span>' +
         '<div><h3 class="brand-group__title">' + esc(L(grp.title)) + '</h3><p class="brand-group__sub">' + esc(L(grp.sub)) + '</p></div></div>' +
@@ -166,7 +166,7 @@
     var seen = {}, names = [];
     D.BRAND_GROUPS.forEach(function (g) { g.brands.forEach(function (b) { if (!seen[b.name]) { seen[b.name] = 1; names.push(b); } }); });
     var row = names.map(function (b) {
-      return '<div class="lm-item' + (b.featured ? ' is-featured' : '') + '"><img src="assets/brands/' + brandSlug(b.name) + '.svg" alt="' + esc(b.name) + '" data-ph="brand" loading="lazy"></div>';
+      return '<div class="lm-item' + (b.featured ? ' is-featured' : '') + '"><img src="' + H.brandLogo(b.name) + '" alt="' + esc(b.name) + '" data-ph="brand" loading="lazy"></div>';
     }).join('');
     return '<div class="logo-marquee" data-reveal><div class="lm-track"><div class="lm-row">' + row + '</div><div class="lm-row" aria-hidden="true">' + row + '</div></div></div>';
   }

@@ -446,20 +446,22 @@ html.menu-open .site-header::before { opacity: 1; transition: opacity .35s var(-
 .brand-note { margin-top: 34px; padding: 18px 22px; border: 1px dashed var(--line-2); border-radius: var(--radius); color: var(--text-muted); font-size: 13.5px; background: var(--bg-2); }
 
 /* Logot: monokrome (profesionale) — ngjyrë në hover; firmat kryesore gjithmonë me ngjyrë */
-.brand-logo-img { filter: grayscale(1) brightness(2.3) contrast(.85); opacity: .7; transition: filter .4s var(--ease), opacity .4s var(--ease), transform .3s var(--ease); }
-.brand-chip:hover .brand-logo-img, .brand-chip.is-featured .brand-logo-img { filter: none; opacity: 1; }
-.brand-chip.is-featured { background: linear-gradient(180deg, rgba(230,108,33,.07), var(--surface)); }
+.brand-chip, .brand-chip:hover { background: #F4F6F8; border-color: rgba(255,255,255,.14); }
+.brand-chip { min-height: 92px; box-shadow: inset 0 0 0 1px rgba(14,23,30,.04), 0 10px 26px -18px rgba(0,0,0,.8); }
+.brand-chip:hover { box-shadow: inset 0 0 0 1px rgba(14,23,30,.04), 0 18px 34px -18px rgba(0,0,0,.9); }
+.brand-logo-img { max-height: 44px; max-width: 78%; opacity: 1; }
+.brand-chip.is-featured { box-shadow: 0 0 0 2px var(--accent), 0 14px 30px -18px rgba(230,108,33,.7); border-color: transparent; }
 
 /* Shiriti i logove (marquee) */
-.logo-marquee { position: relative; overflow: hidden; margin: 0 0 40px; padding: 6px 0; border-block: 1px solid var(--line); -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent); mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent); }
+.logo-marquee { position: relative; overflow: hidden; margin: 0 0 40px; padding: 4px 0; -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent); mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent); }
 .lm-track { display: flex; width: max-content; animation: lmScroll 48s linear infinite; }
 .logo-marquee:hover .lm-track { animation-play-state: paused; }
 .lm-row { display: flex; flex-shrink: 0; }
-.lm-item { display: grid; place-items: center; width: 190px; height: 86px; padding: 0 26px; border-right: 1px solid var(--line); }
-.lm-item img { max-height: 40px; max-width: 100%; width: auto; filter: grayscale(1) brightness(2.3) contrast(.85); opacity: .6; transition: filter .4s var(--ease), opacity .4s var(--ease); }
-.lm-item.is-featured img, .lm-item:hover img { filter: none; opacity: 1; }
+.lm-item { display: grid; place-items: center; width: 196px; height: 92px; padding: 10px 8px; }
+.lm-item img, .lm-item img.is-loaded { box-sizing: border-box; width: 180px; height: 72px; padding: 16px 22px; object-fit: contain; border-radius: 10px; background: #F4F6F8; transition: transform .35s var(--ease), box-shadow .35s var(--ease); }
+.lm-item:hover img { transform: translateY(-2px); box-shadow: 0 12px 26px -16px rgba(0,0,0,.9); }
 @keyframes lmScroll { to { transform: translate3d(-50%,0,0); } }
-@media (max-width: 620px) { .lm-item { width: 150px; height: 72px; padding: 0 18px; } .lm-item img { max-height: 32px; } }
+@media (max-width: 620px) { .lm-item { width: 156px; height: 76px; } .lm-item img { width: 144px; height: 60px; padding: 13px 16px; } }
 @media (prefers-reduced-motion: reduce) { .lm-track { animation: none; } }
 
 /* ------------------------------- FIELD WORK ------------------------------ */
@@ -726,8 +728,10 @@ html.menu-open .shop-btn { opacity: 0; visibility: hidden; pointer-events: none;
 .pi-svg .a { fill: var(--accent); stroke: none; }
 .pi-svg .as { stroke: var(--accent); }
 .pi-svg .h { fill: #101920; stroke: none; }
-.pc-brand { position: absolute; top: 10px; left: 10px; display: flex; align-items: center; height: 28px; padding: 0 10px; border-radius: 8px; border: 1px solid var(--line-2); background: rgba(10,16,21,.78); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
-.pc-brand img { height: 15px; width: auto; max-width: 92px; }
+.pc-brand { position: absolute; top: 10px; left: 10px; display: flex; align-items: center; height: 30px; padding: 0 10px; border-radius: 8px; background: #F4F6F8; box-shadow: 0 6px 16px -8px rgba(0,0,0,.7); }
+.pc-brand:has(img[src$=".png"]) { height: 34px; padding: 0 8px; }
+.pc-brand img { height: 18px; width: auto; max-width: 92px; object-fit: contain; }
+.pc-brand img[src$=".png"] { height: 24px; }
 .pc-no { position: absolute; top: 15px; right: 13px; font-size: 10px; font-weight: 800; letter-spacing: .14em; color: var(--text-faint); }
 .pc-body { display: flex; flex-direction: column; flex: 1; padding: 15px 16px 16px; }
 .pc-cat { font-size: 10px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--accent-2); }
@@ -750,7 +754,7 @@ html.menu-open .shop-btn { opacity: 0; visibility: hidden; pointer-events: none;
   .pc-title { font-size: 16px; }
   .pc-call { display: none; }
   .pc-add { font-size: 12px; padding: 0 8px; gap: 6px; }
-  .pc-brand { top: 8px; left: 8px; height: 24px; padding: 0 8px; }
+  .pc-brand { top: 8px; left: 8px; height: 26px; padding: 0 8px; }
   .pc-brand img { height: 12px; }
   .pc-no { display: none; }
 }

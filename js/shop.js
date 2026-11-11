@@ -209,7 +209,7 @@
     var hay = norm([title(p), s, L(c.name), p.brand || ''].join(' '));
     return '<article class="product-card pc-anim" data-cat="' + p.cat + '" data-search="' + esc(hay) + '" style="--d:' + (i % 16) + '">' +
       '<div class="pc-media"><span class="pc-grid" aria-hidden="true"></span><span class="pc-icon">' + icon(p.icon) + '</span>' +
-        (p.brand ? '<span class="pc-brand"><img src="assets/brands/' + slug(p.brand) + '.svg" alt="' + esc(p.brand) + '" data-ph="brand" loading="lazy"></span>' : '') +
+        (p.brand ? '<span class="pc-brand"><img src="' + H.brandLogo(p.brand) + '" alt="' + esc(p.brand) + '" data-ph="brand" loading="lazy"></span>' : '') +
         '<span class="pc-no">' + esc(t('shop.no')) + ' ' + pad(i + 1) + '</span></div>' +
       '<div class="pc-body"><span class="pc-cat">' + esc(L(c.name)) + '</span>' +
         '<h3 class="pc-title">' + esc(L(p.name)) + (p.brand && !hasBrandInName(p) ? ' <span class="pc-title-brand">' + esc(p.brand) + '</span>' : '') + '</h3>' +

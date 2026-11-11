@@ -9,7 +9,7 @@
      KATALOGU I DYQANIT
      PRODUCTS është burimi i vetëm: kategoritë (CATEGORIES.items) gjenerohen prej tij.
      Fusha: id, cat (çelësi i kategorisë), icon (ikona në shop.js), brand (logo te
-     assets/brands/<emri>.svg), name/spec { sq, fr, de }.
+     assets/brands/<emri>.svg — ose .png, shih LOGO_EXT te helpers.js), name/spec { sq, fr, de }.
      ========================================================================== */
   var CATEGORIES = [
     { key: 'cimento',

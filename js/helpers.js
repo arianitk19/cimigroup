@@ -27,9 +27,13 @@
   function img(src, alt, ratio, extra) {
     return '<img src="' + esc(src) + '" alt="' + esc(alt) + '" data-ph="' + esc(ratio || 'wide') + '" loading="lazy" decoding="async"' + (extra || '') + '>';
   }
+  /* Shtegu i logos së një marke. Shumica janë .svg; përjashtimet listohen këtu. */
+  var LOGO_EXT = { creaton: 'png' };
+  function brandSlug(n) { return String(n).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
+  function brandLogo(n) { var s = brandSlug(n); return 'assets/brands/' + s + '.' + (LOGO_EXT[s] || 'svg'); }
   var ARROW = '<svg class="btn-arrow" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 
-  window.H = { PH: PH, esc: esc, L: L, t: t, img: img, ARROW: ARROW,
+  window.H = { PH: PH, esc: esc, L: L, t: t, img: img, ARROW: ARROW, brandLogo: brandLogo,
     CONTACT: { tel: '044425968', telDisplay: '044 425 968', email: 'besim.hoti@hotmail.com', address: 'Rruga Visar Hoti, Ratkoc, Kosovë' },
     ROUTES: ['ballina', 'dyqani', 'projekte', 'materialet', 'partneret', 'terren', 'galeri', 'lokacioni', 'kontakti']
   };
