@@ -87,11 +87,24 @@
       '</div></section>';
   }
 
-  function materialCard(c) {
-    var items = L(c.items).map(function (it) { return '<li>' + esc(it) + '</li>'; }).join('');
+  /* Markat theksohen brenda emrave të produkteve */
+  var BRAND_RE = /\b(Tondach|Creaton|GEWISS|Vargon|Tulltore|Rizam|Sharrmall|TM)\b/g;
+  function brandify(s) { return esc(s).replace(BRAND_RE, '<strong class="mi-brand">$1</strong>'); }
+  function catName(s) { return esc(s).replace(/ &amp; /g, ' <span class="amp">&amp;</span> '); }
+
+  function materialCard(c, i) {
+    var list = L(c.items), n = list.length;
+    var items = list.map(function (it) {
+      var parts = String(it).split(' — ');
+      return '<li><span class="mi-tick" aria-hidden="true"></span><span class="mi-text">' + brandify(parts[0]) +
+        (parts[1] ? '<span class="mi-sub">' + esc(parts[1]) + '</span>' : '') + '</span></li>';
+    }).join('');
+    var count = n + ' ' + t(n === 1 ? 'materials.prodOne' : 'materials.prodMany');
     return '<article class="material-card">' +
-      '<div class="material-illus">' + window.MATERIAL_ART(c.key) + '</div>' +
-      '<div class="material-body"><h3 class="material-name">' + esc(L(c.name)) + '</h3><p class="material-desc">' + esc(L(c.desc)) + '</p><ul class="material-items">' + items + '</ul></div>' +
+      '<div class="material-illus">' + window.MATERIAL_ART(c.key) +
+        '<span class="material-index" aria-hidden="true">' + ('0' + (i + 1)).slice(-2) + '</span>' +
+        '<span class="material-count">' + esc(count) + '</span></div>' +
+      '<div class="material-body"><h3 class="material-name">' + catName(L(c.name)) + '</h3><p class="material-desc">' + esc(L(c.desc)) + '</p><ul class="material-items">' + items + '</ul></div>' +
     '</article>';
   }
   function materialsSection(limit, showCta) {
@@ -147,10 +160,19 @@
         '<div class="brand-grid reveal-stagger">' + chips + '</div></div>';
     }).join('');
   }
+  /* Shiriti i logove — të gjitha firmat, lëviz pafundësisht (ndalet në hover) */
+  function logoMarquee() {
+    var seen = {}, names = [];
+    D.BRAND_GROUPS.forEach(function (g) { g.brands.forEach(function (b) { if (!seen[b.name]) { seen[b.name] = 1; names.push(b); } }); });
+    var row = names.map(function (b) {
+      return '<div class="lm-item' + (b.featured ? ' is-featured' : '') + '"><img src="assets/brands/' + brandSlug(b.name) + '.svg" alt="' + esc(b.name) + '" data-ph="brand" loading="lazy"></div>';
+    }).join('');
+    return '<div class="logo-marquee" data-reveal><div class="lm-track"><div class="lm-row">' + row + '</div><div class="lm-row" aria-hidden="true">' + row + '</div></div></div>';
+  }
   function partnersSection(preview) {
     return '<section class="section"><div class="container-x">' +
       '<div class="section-head"><div><p class="eyebrow" data-reveal>' + esc(t('partners.eyebrow')) + '</p><h2 class="section-title" data-reveal>' + esc(t('partners.title')) + '</h2></div><p class="section-note" data-reveal>' + esc(t('partners.note')) + '</p></div>' +
-      gewissFeature() +
+      gewissFeature() + logoMarquee() +
       (preview
         ? '<div style="margin-top:8px" data-reveal><a href="' + href('partneret') + '" class="btn btn-ghost" data-route="partneret">' + esc(t('partners.viewAll')) + ARROW + '</a></div>'
         : brandGroups() + '<p class="brand-note" data-reveal>' + esc(t('partners.disclaimer')) + '</p>') +

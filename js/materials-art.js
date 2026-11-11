@@ -74,6 +74,30 @@
     tjera: frame(
       g('<circle cx="196" cy="138" r="30"/><circle cx="196" cy="138" r="9"/><path d="M196 96 v14 M196 166 v14 M154 138 h14 M224 138 h14 M166 108 l10 10 M226 168 l-10 -10 M166 168 l10 -10 M226 108 l-10 10"/>') +
       '<path d="M262 108 a20 20 0 1 0 24 24 l24 24 l10 -10 l-24 -24 a20 20 0 0 0 -34 -14 z" fill="' + ORANGE + '" opacity="0.9"/>'
+    ),
+    // Blloqe & Oxhaqe — bllok giter + gyp oxhaku
+    muratura: frame(
+      g('<rect x="128" y="118" width="124" height="86" rx="4"/><path d="M128 146 h124 M128 176 h124 M159 118 v86 M190 118 v86 M221 118 v86"/>') +
+      '<rect x="270" y="74" width="40" height="130" rx="4" fill="' + ORANGE + '" opacity="0.9"/>' +
+      g('<ellipse cx="290" cy="74" rx="20" ry="7"/><path d="M270 110 h40 M270 168 h40"/>')
+    ),
+    // Kulm & Mbulesë — kulm me tjegulla + kulmar
+    kulm: frame(
+      g('<path d="M116 176 L200 96 L284 176"/><path d="M136 176 V214 H264 V176"/>') +
+      g('<path d="M168 128 q8 9 16 0 q8 9 16 0 q8 9 16 0 q8 9 16 0"/><path d="M146 152 q8 9 16 0 q8 9 16 0 q8 9 16 0 q8 9 16 0 q8 9 16 0 q8 9 16 0 q8 9 16 0"/>') +
+      '<path d="M178 117 L200 96 L222 117" fill="none" stroke="' + ORANGE + '" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>'
+    ),
+    // Qeramikë & Ngjitës — pllaka + mistri me dhëmbë
+    qeramike: frame(
+      g('<rect x="128" y="80" width="120" height="120" rx="4"/><path d="M168 80 v120 M208 80 v120 M128 120 h120 M128 160 h120"/>') +
+      '<rect x="171" y="123" width="34" height="34" fill="' + ORANGE + '" opacity="0.92"/>' +
+      g('<path d="M266 150 h52 v24 h-52 z"/><path d="M272 174 v9 M282 174 v9 M292 174 v9 M302 174 v9 M312 174 v9 M292 150 v-28"/>')
+    ),
+    // Makina pune — betonierë
+    makina: frame(
+      g('<path d="M130 196 H280"/><circle cx="154" cy="208" r="11"/><circle cx="256" cy="208" r="11"/><path d="M178 196 L210 150 M244 196 L210 150"/>') +
+      '<ellipse cx="210" cy="124" rx="52" ry="34" transform="rotate(-18 210 124)" fill="' + ORANGE + '" opacity="0.9"/>' +
+      g('<ellipse cx="262" cy="106" rx="9" ry="20" transform="rotate(-18 262 106)"/><path d="M168 112 l70 -22 M176 138 l70 -22"/>')
     )
   };
 

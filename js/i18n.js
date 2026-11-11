@@ -17,7 +17,7 @@
       hero: { eyebrow: 'Cimi Group SA · Ratkoc, Kosovë', t1: 'Nga fillimi,', accent: 'deri në përfundim.', sub: 'Cimi Group SA ofron materiale ndërtimore, zgjidhje profesionale dhe mbështetje në terren për projekte të ndryshme ndërtimore.' },
       trust: { a: 'Materiale të përzgjedhura', b: 'Produkte europiane', c: 'Zgjidhje profesionale', d: 'Mbështetje në terren' },
       about: { eyebrow: 'Kush jemi', title1: 'Më shumë se', title2: 'materiale ndërtimore.', lead: 'Cimi Group SA nuk është vetëm vendi ku blihen materialet. Është partner për njerëzit dhe kompanitë që duan të realizojnë një projekt në mënyrë të organizuar dhe profesionale.', p2: 'Nga furnizimi me materialet e duhura, te zgjidhjet e përshtatura dhe mbështetja drejtpërdrejt në terren — synojmë të jemi një partner i vetëm që e shoqëron projektin nga ideja e parë deri te përfundimi i tij.', pt1: 'Furnizim me materiale për një gamë të gjerë projektesh.', pt2: 'Zgjidhje profesionale të përshtatura me nevojat e projektit.', pt3: 'Bashkëpunim dhe mbështetje deri te përfundimi.' },
-      materials: { eyebrow: 'Çfarë ofrojmë', title: 'Kategoritë e materialeve', note: 'Një gamë e gjerë materialesh dhe produktesh për ndërtim, renovim dhe furnizim profesional.', includes: 'Përfshin', explore: 'Të gjitha kategoritë', viewAll: 'Shiko materialet' },
+      materials: { eyebrow: 'Çfarë ofrojmë', title: 'Kategoritë e materialeve', note: 'Një gamë e gjerë materialesh dhe produktesh për ndërtim, renovim dhe furnizim profesional.', includes: 'Përfshin', explore: 'Të gjitha kategoritë', viewAll: 'Shiko materialet', prodOne: 'produkt', prodMany: 'produkte' },
       process: { eyebrow: 'Si punojmë', title: 'Nga fillimi deri në përfundim', note: 'Një rrugë e qartë — nga planifikimi te përfundimi i projektit.' },
       projects: { eyebrow: 'Portofoli', title: 'Projekte', note: 'Një përzgjedhje projektesh — furnizim, zgjidhje dhe mbështetje në terren.', viewAll: 'Shiko të gjitha projektet', featured: 'Projekt i veçuar', hasVideo: 'Me video' },
       project: { kategoria: 'Kategoria', lokacioni: 'Lokacioni', viti: 'Viti', materialet: 'Materialet e përdorura', galeria: 'Galeria e projektit', video: 'Video nga puna' },
@@ -30,6 +30,7 @@
       final: { title1: 'Projekti juaj', title2: 'fillon këtu.', sub: 'Pavarësisht nëse bëhet fjalë për ndërtim, renovim apo furnizim me materiale, Cimi Group SA është këtu për t\'ju ndihmuar të gjeni zgjidhjen e duhur.' },
       footer: { desc: 'Materiale, zgjidhje dhe mbështetje për projekte ndërtimore.', menu: 'Menuja', kontakti: 'Kontakti', rights: 'Të gjitha të drejtat e rezervuara.' },
       brands: { note: 'Prodhues dhe marka europiane sipas fushave' },
+      menu: { open: 'Menu', close: 'Mbyll', nav: 'Navigimi', cats: 'Kategoritë e materialeve', contact: 'Na kontaktoni', lang: 'Gjuha', here: 'Je këtu', maps: 'Hap në hartë', tagline: 'Nga fillimi, deri në përfundim.' },
       home: 'Ballina'
     },
 
@@ -39,7 +40,7 @@
       hero: { eyebrow: 'Cimi Group SA · Ratkoc, Kosovo', t1: 'Du début,', accent: 'jusqu\'à l\'achèvement.', sub: 'Cimi Group SA fournit des matériaux de construction, des solutions professionnelles et un accompagnement sur chantier pour divers projets de construction.' },
       trust: { a: 'Matériaux sélectionnés', b: 'Produits européens', c: 'Solutions professionnelles', d: 'Accompagnement sur chantier' },
       about: { eyebrow: 'Qui sommes-nous', title1: 'Plus que des', title2: 'matériaux de construction.', lead: 'Cimi Group SA n\'est pas seulement l\'endroit où l\'on achète des matériaux. C\'est un partenaire pour les particuliers et les entreprises qui veulent réaliser un projet de manière organisée et professionnelle.', p2: 'De la fourniture des bons matériaux aux solutions sur mesure et à l\'accompagnement direct sur le chantier — nous voulons être le partenaire unique qui accompagne le projet de la première idée jusqu\'à son achèvement.', pt1: 'Fourniture de matériaux pour une large gamme de projets.', pt2: 'Solutions professionnelles adaptées aux besoins du projet.', pt3: 'Collaboration et accompagnement jusqu\'à l\'achèvement.' },
-      materials: { eyebrow: 'Ce que nous offrons', title: 'Catégories de matériaux', note: 'Une large gamme de matériaux et de produits pour la construction, la rénovation et l\'approvisionnement professionnel.', includes: 'Comprend', explore: 'Toutes les catégories', viewAll: 'Voir les matériaux' },
+      materials: { eyebrow: 'Ce que nous offrons', title: 'Catégories de matériaux', note: 'Une large gamme de matériaux et de produits pour la construction, la rénovation et l\'approvisionnement professionnel.', includes: 'Comprend', explore: 'Toutes les catégories', viewAll: 'Voir les matériaux', prodOne: 'produit', prodMany: 'produits' },
       process: { eyebrow: 'Comment nous travaillons', title: 'Du début à l\'achèvement', note: 'Un parcours clair — de la planification à l\'achèvement du projet.' },
       projects: { eyebrow: 'Portfolio', title: 'Projets', note: 'Une sélection de projets — fourniture, solutions et accompagnement sur chantier.', viewAll: 'Voir tous les projets', featured: 'Projet en vedette', hasVideo: 'Avec vidéo' },
       project: { kategoria: 'Catégorie', lokacioni: 'Emplacement', viti: 'Année', materialet: 'Matériaux utilisés', galeria: 'Galerie du projet', video: 'Vidéos du chantier' },
@@ -52,6 +53,7 @@
       final: { title1: 'Votre projet', title2: 'commence ici.', sub: 'Qu\'il s\'agisse de construction, de rénovation ou de fourniture de matériaux, Cimi Group SA est là pour vous aider à trouver la bonne solution.' },
       footer: { desc: 'Matériaux, solutions et accompagnement pour projets de construction.', menu: 'Menu', kontakti: 'Contact', rights: 'Tous droits réservés.' },
       brands: { note: 'Fabricants et marques européens par domaine' },
+      menu: { open: 'Menu', close: 'Fermer', nav: 'Navigation', cats: 'Catégories de matériaux', contact: 'Contactez-nous', lang: 'Langue', here: 'Vous êtes ici', maps: 'Ouvrir la carte', tagline: 'Du début, jusqu\'à l\'achèvement.' },
       home: 'Accueil'
     },
 
@@ -61,7 +63,7 @@
       hero: { eyebrow: 'Cimi Group SA · Ratkoc, Kosovo', t1: 'Vom Anfang,', accent: 'bis zur Fertigstellung.', sub: 'Cimi Group SA liefert Baumaterialien, professionelle Lösungen und Unterstützung vor Ort für verschiedene Bauprojekte.' },
       trust: { a: 'Ausgewählte Materialien', b: 'Europäische Produkte', c: 'Professionelle Lösungen', d: 'Unterstützung vor Ort' },
       about: { eyebrow: 'Wer wir sind', title1: 'Mehr als nur', title2: 'Baumaterialien.', lead: 'Cimi Group SA ist nicht nur der Ort, an dem man Materialien kauft. Wir sind ein Partner für Menschen und Unternehmen, die ein Projekt organisiert und professionell umsetzen möchten.', p2: 'Von der Lieferung der richtigen Materialien über maßgeschneiderte Lösungen bis zur direkten Unterstützung vor Ort — wir möchten der eine Partner sein, der das Projekt von der ersten Idee bis zur Fertigstellung begleitet.', pt1: 'Materiallieferung für ein breites Spektrum an Projekten.', pt2: 'Professionelle Lösungen, abgestimmt auf die Projektanforderungen.', pt3: 'Zusammenarbeit und Unterstützung bis zur Fertigstellung.' },
-      materials: { eyebrow: 'Was wir bieten', title: 'Materialkategorien', note: 'Ein breites Sortiment an Materialien und Produkten für Bau, Renovierung und professionelle Versorgung.', includes: 'Umfasst', explore: 'Alle Kategorien', viewAll: 'Materialien ansehen' },
+      materials: { eyebrow: 'Was wir bieten', title: 'Materialkategorien', note: 'Ein breites Sortiment an Materialien und Produkten für Bau, Renovierung und professionelle Versorgung.', includes: 'Umfasst', explore: 'Alle Kategorien', viewAll: 'Materialien ansehen', prodOne: 'Produkt', prodMany: 'Produkte' },
       process: { eyebrow: 'Wie wir arbeiten', title: 'Vom Anfang bis zur Fertigstellung', note: 'Ein klarer Weg — von der Planung bis zum Projektabschluss.' },
       projects: { eyebrow: 'Portfolio', title: 'Projekte', note: 'Eine Auswahl von Projekten — Lieferung, Lösungen und Unterstützung vor Ort.', viewAll: 'Alle Projekte ansehen', featured: 'Ausgewähltes Projekt', hasVideo: 'Mit Video' },
       project: { kategoria: 'Kategorie', lokacioni: 'Standort', viti: 'Jahr', materialet: 'Verwendete Materialien', galeria: 'Projektgalerie', video: 'Videos von der Arbeit' },
@@ -74,6 +76,7 @@
       final: { title1: 'Ihr Projekt', title2: 'beginnt hier.', sub: 'Ob Bau, Renovierung oder Materiallieferung — Cimi Group SA hilft Ihnen, die richtige Lösung zu finden.' },
       footer: { desc: 'Materialien, Lösungen und Unterstützung für Bauprojekte.', menu: 'Menü', kontakti: 'Kontakt', rights: 'Alle Rechte vorbehalten.' },
       brands: { note: 'Europäische Hersteller und Marken nach Bereich' },
+      menu: { open: 'Menü', close: 'Schließen', nav: 'Navigation', cats: 'Materialkategorien', contact: 'Kontakt', lang: 'Sprache', here: 'Sie sind hier', maps: 'Karte öffnen', tagline: 'Vom Anfang bis zur Fertigstellung.' },
       home: 'Startseite'
     }
   };
