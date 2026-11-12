@@ -1012,3 +1012,72 @@ body.has-quote-bar .scroll-top { bottom: calc(84px + env(safe-area-inset-bottom)
 
 /* Tailwind utilities emitohen te fundit që të mbizotërojnë ndaj komponentëve */
 @tailwind utilities;
+
+/* ============================================================================
+   PAMJA E PRODUKTIT (dyqan) — hapet kur klikohet një produkt
+   ========================================================================== */
+.product-card[data-product] { cursor: pointer; }
+.product-card[data-product]:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.pc-view { position: absolute; left: 12px; bottom: 12px; z-index: 2; display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 14px; border-radius: 999px; background: rgba(12,19,25,.78); border: 1px solid rgba(255,255,255,.2); color: #fff; font-size: 12px; font-weight: 700; letter-spacing: .02em; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); opacity: 0; transform: translateY(8px); transition: opacity .35s var(--ease), transform .35s var(--ease), background .25s var(--ease); pointer-events: none; }
+.pc-view svg { width: 14px; height: 14px; }
+.product-card:hover .pc-view, .product-card:focus-visible .pc-view { opacity: 1; transform: none; }
+.product-card:hover .pc-view { background: var(--accent); border-color: var(--accent); }
+@media (hover: none) { .pc-view { opacity: 1; transform: none; height: 30px; padding: 0 11px; font-size: 11px; } }
+
+.pd-overlay { position: fixed; inset: 0; z-index: 124; display: grid; place-items: center; padding: 24px; visibility: hidden; pointer-events: none; transition: visibility 0s linear .45s; }
+.pd-overlay.is-open { visibility: visible; pointer-events: auto; transition: visibility 0s; }
+.pd-scrim { position: absolute; inset: 0; background: rgba(4,7,10,.72); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); opacity: 0; transition: opacity .4s var(--ease); }
+.pd-overlay.is-open .pd-scrim { opacity: 1; }
+.pd-sheet { position: relative; width: min(1040px, 100%); max-height: min(720px, calc(100dvh - 48px)); display: grid; grid-template-columns: minmax(0, 1.02fr) minmax(0, 1fr); overflow: hidden; border: 1px solid var(--line-2); border-radius: 22px; background: var(--bg-2); box-shadow: var(--shadow-pop); opacity: 0; transform: translate3d(0, 26px, 0) scale(.975); transition: opacity .38s var(--ease), transform .5s var(--ease-drawer); outline: none; }
+.pd-overlay.is-open .pd-sheet { opacity: 1; transform: none; }
+.pd-x { position: absolute; top: 14px; right: 14px; z-index: 3; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--line-2); background: rgba(12,19,25,.7); color: var(--heading); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); transition: background .3s var(--ease), border-color .3s var(--ease), transform .4s var(--ease); }
+.pd-x:hover { background: var(--accent); border-color: var(--accent); transform: rotate(90deg); }
+.pd-media { position: relative; display: grid; place-items: center; min-height: 420px; overflow: hidden; background: radial-gradient(70% 62% at 50% 46%, rgba(255,255,255,.06), transparent 72%), #101920; }
+.pd-media.has-photo { background: #0c1319; }
+.pd-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.pd-media.has-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,16,21,.30) 0%, transparent 26%, transparent 74%, rgba(10,16,21,.30)); pointer-events: none; }
+.pd-media .pc-icon { width: 150px; height: 150px; }
+.pd-media .pc-brand { z-index: 2; }
+.pd-info { display: flex; flex-direction: column; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 40px 38px 30px; }
+.pd-info .eyebrow { margin-bottom: 14px; padding-right: 48px; }
+.pd-title { margin: 0; font-family: var(--font-display); font-variation-settings: "opsz" 60; font-size: clamp(26px, 2.6vw, 36px); font-weight: 700; letter-spacing: -.03em; line-height: 1.06; color: var(--heading); }
+.pd-lead { margin: 12px 0 0; font-size: 16px; font-weight: 600; color: var(--accent-2); }
+.pd-desc { margin: 12px 0 0; font-size: 14.5px; line-height: 1.6; color: var(--text-muted); }
+.pd-facts { margin: 22px 0 0; border-top: 1px solid var(--line); }
+.pd-fact { display: grid; grid-template-columns: 124px minmax(0, 1fr); gap: 14px; padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.pd-fact dt { color: var(--text-faint); font-size: 11.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; padding-top: 2px; }
+.pd-fact dd { margin: 0; color: var(--heading); font-weight: 600; }
+.pd-buy { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 24px; }
+.pd-qty { height: 50px; }
+.pd-qty button { width: 40px; height: 48px; font-size: 20px; }
+.pd-qty input { width: 46px; height: 46px; border: 0; background: transparent; color: var(--heading); font-weight: 700; font-size: 15px; text-align: center; -moz-appearance: textfield; appearance: textfield; }
+.pd-qty input::-webkit-outer-spin-button, .pd-qty input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.pd-add { flex: 1; min-width: 170px; display: inline-flex; align-items: center; justify-content: center; gap: 9px; height: 50px; padding: 0 20px; border-radius: 999px; border: 1px solid var(--accent); background: var(--accent); color: #fff; font-size: 14.5px; font-weight: 700; white-space: nowrap; box-shadow: 0 14px 28px -14px var(--accent); transition: background .25s var(--ease), transform .2s var(--ease), box-shadow .25s var(--ease); }
+.pd-add:hover { background: var(--accent-2); border-color: var(--accent-2); }
+.pd-add:active { transform: scale(.98); }
+.pd-add.is-added { background: transparent; color: var(--heading); border-color: var(--line-3); box-shadow: none; }
+.pd-add .pc-add-ico svg { width: 17px; height: 17px; }
+.pd-call { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 50px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--line-2); color: var(--heading); font-size: 14px; font-weight: 700; transition: border-color .25s var(--ease), background .25s var(--ease); }
+.pd-call:hover { border-color: var(--accent); background: rgba(230,108,33,.1); }
+.pd-note { margin: 14px 0 0; font-size: 12.5px; color: var(--text-faint); }
+.pd-rel { margin-top: 26px; padding-top: 20px; border-top: 1px solid var(--line); }
+.pd-rel h3 { margin: 0 0 12px; font-size: 11.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--text-faint); }
+.pd-rel-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.pd-rel-item { display: flex; flex-direction: column; gap: 8px; padding: 0 0 10px; overflow: hidden; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--text); font-size: 12.5px; font-weight: 600; line-height: 1.25; text-align: left; transition: border-color .25s var(--ease), transform .3s var(--ease); }
+.pd-rel-item:hover { border-color: rgba(230,108,33,.55); transform: translateY(-2px); }
+.pd-rel-item img, .pd-rel-ico { width: 100%; aspect-ratio: 5 / 3; object-fit: cover; display: grid; place-items: center; background: #101920; }
+.pd-rel-ico svg { width: 38px; height: 38px; }
+.pd-rel-item > span:last-child { padding: 0 10px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+@media (max-width: 820px) {
+  .pd-overlay { padding: 0; place-items: end center; }
+  .pd-sheet { width: 100%; max-height: 94dvh; grid-template-columns: minmax(0, 1fr); overflow-y: auto; overscroll-behavior: contain; border-radius: 22px 22px 0 0; border-bottom: 0; transform: translate3d(0, 100%, 0); opacity: 1; }
+  .pd-media { min-height: 0; aspect-ratio: 16 / 11; }
+  .pd-media .pc-icon { width: 104px; height: 104px; }
+  .pd-info { overflow: visible; padding: 24px 20px calc(24px + env(safe-area-inset-bottom)); }
+  .pd-info .eyebrow { padding-right: 0; }
+  .pd-fact { grid-template-columns: 108px minmax(0, 1fr); }
+  .pd-add { min-width: 0; }
+  .pd-call span { display: none; }
+  .pd-call { width: 50px; padding: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .pd-sheet, .pd-scrim, .pc-view { transition: none; } }

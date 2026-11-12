@@ -83,6 +83,7 @@
     document.querySelectorAll('[data-quote-toggle]').forEach(function (b) { setBtn(b, !!quote[b.dataset.quoteToggle]); });
     updateBar();
     if (panelOpen) renderPanel();
+    if (detailId) syncDetail();
   }
   function btnInner(on) {
     return '<span class="pc-add-ico">' + (on ? I.check : I.plus) + '</span><span class="pc-add-txt">' + esc(t(on ? 'shop.added' : 'shop.add')) + '</span>';
@@ -156,8 +157,86 @@
     if (!panelOpen) return;
     panelOpen = false;
     ov.classList.remove('is-open'); ov.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('no-scroll');
+    if (!detailId) document.body.classList.remove('no-scroll');
     if (panelFocus && document.body.contains(panelFocus)) focusEl(panelFocus);
+  }
+
+  /* ---------- Pamja e produktit (hapet kur klikohet një produkt) ---------- */
+  var pd = document.createElement('div');
+  pd.className = 'pd-overlay';
+  pd.setAttribute('role', 'dialog');
+  pd.setAttribute('aria-modal', 'true');
+  pd.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(pd);
+  var detailId = '', detailQty = 1, detailFocus = null;
+  function pdAddInner(on) {
+    return '<span class="pc-add-ico">' + (on ? I.check : I.plus) + '</span><span>' + esc(t(on ? 'shop.added' : 'shop.add')) + '</span>';
+  }
+  function fact(label, value) { return value ? '<div class="pd-fact"><dt>' + esc(label) + '</dt><dd>' + value + '</dd></div>' : ''; }
+  function renderDetail() {
+    var p = byId(detailId); if (!p) return;
+    var c = catOf(p), s = spec(p), on = !!quote[p.id];
+    var rel = P.filter(function (x) { return x.cat === p.cat && x.id !== p.id; }).slice(0, 3);
+    pd.innerHTML = '<div class="pd-scrim" data-pd-close></div>' +
+      '<article class="pd-sheet" tabindex="-1" aria-label="' + esc(title(p)) + '">' +
+      '<button type="button" class="pd-x" data-pd-close aria-label="' + esc(t('menu.close')) + '">' + I.x + '</button>' +
+      '<div class="pd-media' + (photo(p) ? ' has-photo' : '') + '">' +
+        (photo(p) ? '<img class="pd-photo" src="' + photo(p) + '" alt="' + esc(title(p)) + '" decoding="async">'
+                  : '<span class="pc-grid" aria-hidden="true"></span><span class="pc-icon">' + icon(p.icon) + '</span>') +
+        (p.brand ? '<span class="pc-brand"><img src="' + H.brandLogo(p.brand) + '" alt="' + esc(p.brand) + '" data-ph="brand"></span>' : '') +
+      '</div>' +
+      '<div class="pd-info">' +
+        '<span class="eyebrow">' + esc(L(c.name)) + '</span>' +
+        '<h2 class="pd-title">' + esc(L(p.name)) + (p.brand && !hasBrandInName(p) ? ' <span class="pc-title-brand">' + esc(p.brand) + '</span>' : '') + '</h2>' +
+        '<p class="pd-lead">' + esc(cap(s || t('shop.onRequest'))) + '</p>' +
+        (c.desc ? '<p class="pd-desc">' + esc(L(c.desc)) + '</p>' : '') +
+        '<dl class="pd-facts">' +
+          fact(t('shop.dCat'), esc(L(c.name))) +
+          fact(t('shop.dBrand'), p.brand ? esc(p.brand) : '') +
+          fact(t('shop.dSpec'), s ? esc(cap(s)) : '') +
+          fact(t('shop.dPrice'), esc(t('shop.dPriceVal'))) +
+          fact(t('shop.dDelivery'), esc(t('shop.dDeliveryVal'))) +
+        '</dl>' +
+        '<div class="pd-buy">' +
+          '<div class="qp-qty pd-qty" role="group" aria-label="' + esc(t('shop.qty')) + '"><button type="button" data-pd-dec aria-label="−">−</button>' +
+          '<input type="number" inputmode="numeric" min="1" max="9999" value="' + detailQty + '" data-pd-input aria-label="' + esc(t('shop.qty')) + '">' +
+          '<button type="button" data-pd-inc aria-label="+">+</button></div>' +
+          '<button type="button" class="pd-add' + (on ? ' is-added' : '') + '" data-pd-add aria-pressed="' + on + '">' + pdAddInner(on) + '</button>' +
+          '<a href="tel:' + H.CONTACT.tel + '" class="pd-call">' + I.phone + '<span>' + esc(t('shop.call')) + '</span></a>' +
+        '</div>' +
+        '<p class="pd-note">' + esc(t('shop.note')) + '</p>' +
+        (rel.length ? '<div class="pd-rel"><h3>' + esc(t('shop.related')) + '</h3><div class="pd-rel-grid">' + rel.map(function (x) {
+          return '<button type="button" class="pd-rel-item" data-pd-go="' + x.id + '">' +
+            (photo(x) ? '<img src="' + photo(x) + '" alt="" loading="lazy">' : '<span class="pd-rel-ico">' + icon(x.icon) + '</span>') +
+            '<span>' + esc(title(x)) + '</span></button>';
+        }).join('') + '</div></div>' : '') +
+      '</div></article>';
+  }
+  function syncDetail() {
+    var b = pd.querySelector('[data-pd-add]'); if (!b) return;
+    var on = !!quote[detailId];
+    b.classList.toggle('is-added', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); b.innerHTML = pdAddInner(on);
+    var f = pd.querySelector('[data-pd-input]'); if (f && on) { detailQty = quote[detailId]; f.value = detailQty; }
+  }
+  function openDetail(id, keepFocus) {
+    if (!byId(id)) return;
+    var was = !!detailId;
+    if (!was && !keepFocus) detailFocus = document.activeElement;
+    detailId = id; detailQty = quote[id] || 1;
+    renderDetail();
+    if (!was) { void pd.offsetWidth; pd.classList.add('is-open'); pd.setAttribute('aria-hidden', 'false'); document.body.classList.add('no-scroll'); }
+    var sh = pd.querySelector('.pd-sheet'); if (sh) { sh.scrollTop = 0; var inf = sh.querySelector('.pd-info'); if (inf) inf.scrollTop = 0; }
+    if (route() === 'dyqani') writeQuery();
+    setTimeout(function () { if (detailId) focusEl(pd.querySelector('.pd-x')); }, was ? 0 : 320);
+  }
+  function closeDetail(silent) {
+    if (!detailId) return;
+    detailId = '';
+    pd.classList.remove('is-open'); pd.setAttribute('aria-hidden', 'true');
+    if (!panelOpen) document.body.classList.remove('no-scroll');
+    if (!silent && route() === 'dyqani') writeQuery();
+    if (detailFocus && document.body.contains(detailFocus)) focusEl(detailFocus);
+    detailFocus = null;
   }
 
   /* Dërgimi: mbush formën e kontaktit me listën e produkteve */
@@ -186,34 +265,37 @@
   }
 
   /* ---------- Faqja e dyqanit ---------- */
-  var state = { k: 'all', q: '' };
+  var state = { k: 'all', q: '', p: '' };
   function readQuery() {
-    var qs = (location.hash.split('?')[1] || ''), k = 'all', q = '';
+    var qs = (location.hash.split('?')[1] || ''), k = 'all', q = '', pr = '';
     qs.split('&').forEach(function (pair) {
       var kv = pair.split('='), val = '';
       try { val = decodeURIComponent((kv[1] || '').replace(/\+/g, ' ')); } catch (e) { val = ''; }
       if (kv[0] === 'k') k = val;
       if (kv[0] === 'q') q = val;
+      if (kv[0] === 'p') pr = val;
     });
     if (k !== 'all' && !C.some(function (c) { return c.key === k; })) k = 'all';
-    state.k = k; state.q = q;
+    state.k = k; state.q = q; state.p = byId(pr) ? pr : '';
   }
   function writeQuery() {
     var parts = [];
     if (state.k !== 'all') parts.push('k=' + encodeURIComponent(state.k));
     if (state.q) parts.push('q=' + encodeURIComponent(state.q));
+    if (detailId) parts.push('p=' + encodeURIComponent(detailId));
     try { history.replaceState(null, '', '#/dyqani' + (parts.length ? '?' + parts.join('&') : '')); } catch (e) { /* noop */ }
   }
 
   function card(p, i) {
     var c = catOf(p), s = spec(p), on = !!quote[p.id];
     var hay = norm([title(p), s, L(c.name), p.brand || ''].join(' '));
-    return '<article class="product-card pc-anim" data-cat="' + p.cat + '" data-search="' + esc(hay) + '" style="--d:' + (i % 16) + '">' +
+    return '<article class="product-card pc-anim" data-product="' + p.id + '" tabindex="0" role="button" aria-label="' + esc(t('shop.openP') + ': ' + title(p)) + '" data-cat="' + p.cat + '" data-search="' + esc(hay) + '" style="--d:' + (i % 16) + '">' +
       (photo(p)
         ? '<div class="pc-media has-photo"><img class="pc-photo" src="' + photo(p) + '" alt="' + esc(title(p)) + '" loading="lazy" decoding="async">'
         : '<div class="pc-media"><span class="pc-grid" aria-hidden="true"></span><span class="pc-icon">' + icon(p.icon) + '</span>') +
         (p.brand ? '<span class="pc-brand"><img src="' + H.brandLogo(p.brand) + '" alt="' + esc(p.brand) + '" data-ph="brand" loading="lazy"></span>' : '') +
-        '<span class="pc-no">' + esc(t('shop.no')) + ' ' + pad(i + 1) + '</span></div>' +
+        '<span class="pc-no">' + esc(t('shop.no')) + ' ' + pad(i + 1) + '</span>' +
+        '<span class="pc-view" aria-hidden="true">' + esc(t('shop.openP')) + H.ARROW + '</span></div>' +
       '<div class="pc-body"><span class="pc-cat">' + esc(L(c.name)) + '</span>' +
         '<h3 class="pc-title">' + esc(L(p.name)) + (p.brand && !hasBrandInName(p) ? ' <span class="pc-title-brand">' + esc(p.brand) + '</span>' : '') + '</h3>' +
         '<p class="pc-spec' + (s ? '' : ' is-muted') + '">' + esc(cap(s || t('shop.onRequest'))) + '</p>' +
@@ -305,7 +387,19 @@
       if (quote[id]) delete quote[id]; else { quote[id] = 1; bump(); }
       persist(); sync(); return;
     }
-    if (e.target.closest('[data-quote-open]')) { openPanel(); return; }
+    if (e.target.closest('[data-quote-open]')) { closeDetail(); openPanel(); return; }
+    if (detailId) {
+      if (e.target.closest('[data-pd-close]')) { closeDetail(); return; }
+      if ((b = e.target.closest('[data-pd-go]'))) { openDetail(b.dataset.pdGo); return; }
+      var qf = pd.querySelector('[data-pd-input]');
+      if (e.target.closest('[data-pd-inc]')) { detailQty = Math.min(9999, detailQty + 1); qf.value = detailQty; if (quote[detailId]) { quote[detailId] = detailQty; persist(); } return; }
+      if (e.target.closest('[data-pd-dec]')) { detailQty = Math.max(1, detailQty - 1); qf.value = detailQty; if (quote[detailId]) { quote[detailId] = detailQty; persist(); } return; }
+      if (e.target.closest('[data-pd-add]')) {
+        if (quote[detailId]) delete quote[detailId]; else { quote[detailId] = detailQty; bump(); }
+        persist(); sync(); return;
+      }
+    }
+    if ((b = e.target.closest('[data-product]')) && !e.target.closest('a, button')) { openDetail(b.dataset.product); return; }
     if (!panelOpen) return;
     if (e.target.closest('[data-quote-close]')) { closePanel(); return; }
     var item = e.target.closest('[data-qp-id]');
@@ -325,6 +419,11 @@
       state.q = e.target.value; apply(false);
       clearTimeout(qTimer); qTimer = setTimeout(writeQuery, 300); return;
     }
+    if (e.target.matches('[data-pd-input]')) {
+      var dv = Math.round(+e.target.value);
+      if (dv >= 1) { detailQty = Math.min(9999, dv); if (quote[detailId]) { quote[detailId] = detailQty; persist(); } }
+      return;
+    }
     if (e.target.matches('[data-q-input]')) {
       var v = Math.round(+e.target.value), it = e.target.closest('[data-qp-id]');
       if (it && v >= 1) { quote[it.dataset.qpId] = Math.min(9999, v); persist(); }
@@ -338,6 +437,8 @@
   });
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && panelOpen) { closePanel(); return; }
+    if (e.key === 'Escape' && detailId) { closeDetail(); return; }
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('[data-product]')) { e.preventDefault(); openDetail(e.target.dataset.product); return; }
     if (e.key === 'Enter' && e.target.matches && e.target.matches('[data-shop-search]')) e.target.blur();
   });
   // Lidhje si "#/dyqani?k=kulm" ndërsa jemi tashmë në dyqan → vetëm filtro (pa ri-render)
@@ -347,11 +448,12 @@
       readQuery();
       var inp = document.querySelector('[data-shop-search]'); if (inp) inp.value = state.q;
       apply(true); centerChip(true);
-    }
+      if (state.p && state.p !== detailId) openDetail(state.p, true); else if (!state.p && detailId) closeDetail(true);
+    } else if (detailId) closeDetail(true);
     if (panelOpen) closePanel();
   });
 
-  window.I18N.onChange(function () { buildBar(); updateBar(); if (panelOpen) renderPanel(); });
+  window.I18N.onChange(function () { buildBar(); updateBar(); if (panelOpen) renderPanel(); if (detailId) renderDetail(); });
   buildBar();
 
   window.Views = window.Views || {};
@@ -360,9 +462,11 @@
     count: count,
     icon: icon,
     open: openPanel,
+    openProduct: openDetail,
     afterRender: function (r) {
       updateBar();
-      if (r === 'dyqani') { apply(false); centerChip(false); }
+      if (r === 'dyqani') { apply(false); centerChip(false); if (state.p) openDetail(state.p, true); }
+      else if (detailId) closeDetail(true);
       if (r === 'kontakti') fillContact();
     }
   };
