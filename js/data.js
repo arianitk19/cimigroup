@@ -110,7 +110,19 @@
     'gypa-vargon': 'gypa-vargon.jpg',
     'sanitari-tm': 'sanitari-tm.jpg',
     'ngrohje-qendrore': 'ngrohje-qendrore.jpg',
-    'makina-pune': 'makina-pune.jpg'
+    'makina-pune': 'makina-pune.jpg',
+    'cimento-42-5': 'cimento-42-5.jpg',
+    'sharrmall': 'sharrmall.jpg',
+    'oxhak-18': 'oxhak-18.jpg',
+    'oxhak-16': 'oxhak-16.jpg',
+    'oxhak-ngrohje': 'oxhak-ngrohje.jpg',
+    'kondor': 'kondor.jpg',
+    'bitolit': 'bitolit.jpg',
+    'folie-tondach': 'folie-tondach.jpg',
+    'folie-ventiluese': 'folie-ventiluese.jpg',
+    'kapese-kulmaresh': 'kapese-kulmaresh.jpg',
+    'ngjites-styropori': 'ngjites-styropori.jpg',
+    'gewiss': 'gewiss.jpg'
   };
 
   /* Gjenero listat e kategorive nga produktet (p.sh. "Tjegulla Tondach — të gjitha llojet") */
