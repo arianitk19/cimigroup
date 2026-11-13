@@ -92,7 +92,7 @@
       return '<img src="' + PREVIEW[r] + '" alt="" data-preview="' + r + '" data-ph="wide" loading="lazy" decoding="async">';
     }).join('');
     /* Menuja në telefon: pak zëra, të mëdhenj; pjesa tjetër në një grup që hapet */
-    var M_TOP = ['dyqani', 'projekte', 'materialet', 'partneret'], M_MORE = ['terren', 'galeri', 'lokacioni'];
+    var M_TOP = ['ballina', 'dyqani', 'projekte', 'materialet', 'partneret'], M_MORE = ['terren', 'galeri', 'lokacioni'];
     var M_ARROW = '<svg class="m-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
     function mItem(r, i) {
       return '<li style="--i:' + i + '"><a href="' + href(r) + '" class="m-link" data-route="' + r + '" data-menu-close><span>' + esc(t('nav.' + r)) + '</span>' + M_ARROW + '</a></li>';
@@ -121,7 +121,7 @@
                 '<div class="mega-block">' +
                   '<p class="mega-label">' + esc(t('menu.contact')) + '</p>' +
                   '<a href="tel:' + H.CONTACT.tel + '" class="mega-tel">' + H.CONTACT.telDisplay + '</a>' +
-                  '<a href="mailto:' + H.CONTACT.email + '" class="mega-mail">' + H.CONTACT.email + '</a>' +
+                  '<a href="' + H.waLink() + '" target="_blank" rel="noopener" class="mega-mail mega-wa">' + H.WA_ICON + 'WhatsApp</a>' +
                   '<span class="mega-addr">' + H.CONTACT.address + '</span>' +
                   '<a href="' + MAPS + '" target="_blank" rel="noopener" class="mega-maps">' + esc(t('menu.maps')) + ARROW_UR + '</a>' +
                   '<div class="mega-actions">' +
@@ -227,7 +227,7 @@
       '<div class="container-x footer-grid">' +
         '<div class="footer-brand"><img src="' + LOGO + '" alt="Cimi Group SA" class="footer-logo"><p class="footer-desc">' + esc(t('footer.desc')) + '</p></div>' +
         '<nav class="footer-nav" aria-label="Footer"><span class="footer-nav-title">' + esc(t('footer.menu')) + '</span>' + navLinks + '</nav>' +
-        '<div class="footer-contact"><span class="footer-nav-title">' + esc(t('footer.kontakti')) + '</span><a href="tel:' + H.CONTACT.tel + '">' + H.CONTACT.telDisplay + '</a><a href="mailto:' + H.CONTACT.email + '">' + H.CONTACT.email + '</a><span class="footer-addr">' + H.CONTACT.address + '</span></div>' +
+        '<div class="footer-contact"><span class="footer-nav-title">' + esc(t('footer.kontakti')) + '</span><a href="tel:' + H.CONTACT.tel + '">' + H.CONTACT.telDisplay + '</a><a href="' + H.waLink() + '" target="_blank" rel="noopener">WhatsApp</a><span class="footer-addr">' + H.CONTACT.address + '</span></div>' +
       '</div>' +
       '<div class="footer-bottom"><div class="container-x footer-bottom-inner"><span>© ' + new Date().getFullYear() + ' Cimi Group SA. ' + esc(t('footer.rights')) + '</span><a href="#/" class="footer-top" data-route="ballina">↑ ' + esc(t('nav.ballina')) + '</a></div></div>';
   }

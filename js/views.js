@@ -226,7 +226,7 @@
       '<p class="contact-intro" data-reveal>' + esc(t('contact.intro')) + '</p>' +
       '<div class="contact-cards" data-reveal>' +
         '<a href="tel:' + H.CONTACT.tel + '" class="contact-card"><span class="cc-label">' + esc(t('contact.telefon')) + '</span><span class="cc-value">' + H.CONTACT.telDisplay + '</span><span class="cc-cta">' + esc(t('contact.telHint')) + '</span></a>' +
-        '<a href="mailto:' + H.CONTACT.email + '" class="contact-card"><span class="cc-label">' + esc(t('contact.email')) + '</span><span class="cc-value cc-value--sm">' + H.CONTACT.email + '</span><span class="cc-cta">' + esc(t('contact.emailHint')) + '</span></a>' +
+        '<a href="' + H.waLink() + '" target="_blank" rel="noopener" class="contact-card contact-card--wa"><span class="cc-label">' + H.WA_ICON + esc(t('contact.whatsapp')) + '</span><span class="cc-value">' + H.CONTACT.telIntl + '</span><span class="cc-cta">' + esc(t('contact.waHint')) + '</span></a>' +
         '<div class="contact-card contact-card--static"><span class="cc-label">' + esc(t('contact.adresa')) + '</span><span class="cc-value cc-value--sm">' + H.CONTACT.address + '</span></div>' +
       '</div></div>' +
       contactForm() +
@@ -237,11 +237,10 @@
     return '<form class="contact-form" data-contact-form novalidate>' +
       '<div class="cf-row"><div class="cf-field"><label for="cf-emri">' + esc(t('form.emri')) + '</label><input id="cf-emri" name="emri" type="text" autocomplete="given-name" required></div>' +
       '<div class="cf-field"><label for="cf-mbiemri">' + esc(t('form.mbiemri')) + '</label><input id="cf-mbiemri" name="mbiemri" type="text" autocomplete="family-name" required></div></div>' +
-      '<div class="cf-row"><div class="cf-field"><label for="cf-telefoni">' + esc(t('form.telefoni')) + '</label><input id="cf-telefoni" name="telefoni" type="tel" autocomplete="tel" inputmode="tel"></div>' +
-      '<div class="cf-field"><label for="cf-email">' + esc(t('form.email')) + '</label><input id="cf-email" name="email" type="email" autocomplete="email" required></div></div>' +
-      '<div class="cf-field"><label for="cf-lloji">' + esc(t('form.lloji')) + '</label><select id="cf-lloji" name="lloji"><option value="">' + esc(t('form.zgjidhni')) + '</option>' + opt('o_ndertim') + opt('o_renovim') + opt('o_furnizim') + opt('o_elektrik') + opt('o_sanitar') + opt('o_tjeter') + '</select></div>' +
+      '<div class="cf-row"><div class="cf-field"><label for="cf-telefoni">' + esc(t('form.telefoni')) + '</label><input id="cf-telefoni" name="telefoni" type="tel" autocomplete="tel" inputmode="tel" required></div>' +
+      '<div class="cf-field"><label for="cf-lloji">' + esc(t('form.lloji')) + '</label><select id="cf-lloji" name="lloji"><option value="">' + esc(t('form.zgjidhni')) + '</option>' + opt('o_ndertim') + opt('o_renovim') + opt('o_furnizim') + opt('o_elektrik') + opt('o_sanitar') + opt('o_tjeter') + '</select></div></div>' +
       '<div class="cf-field"><label for="cf-mesazhi">' + esc(t('form.mesazhi')) + '</label><textarea id="cf-mesazhi" name="mesazhi" rows="4" required></textarea></div>' +
-      '<button type="submit" class="btn btn-primary btn-block">' + esc(t('form.dergo')) + ARROW + '</button>' +
+      '<button type="submit" class="btn btn-wa btn-block">' + H.WA_ICON + esc(t('form.dergo')) + '</button>' +
       '<p class="cf-note" data-cf-note>' + esc(t('form.note')) + '</p>' +
     '</form>';
   }

@@ -140,15 +140,15 @@
     var form = e.target.closest('[data-contact-form]'); if (!form) return;
     e.preventDefault();
     var f = form.elements, note = form.querySelector('[data-cf-note]');
-    var emailOK = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    var v = { emri: f.emri.value.trim(), mbiemri: f.mbiemri.value.trim(), telefoni: f.telefoni.value.trim(), email: f.email.value.trim(), lloji: f.lloji.value, mesazhi: f.mesazhi.value.trim() };
+    var v = { emri: f.emri.value.trim(), mbiemri: f.mbiemri.value.trim(), telefoni: f.telefoni.value.trim(), lloji: f.lloji.value, mesazhi: f.mesazhi.value.trim() };
     var ok = true;
-    [[f.emri, !v.emri], [f.mbiemri, !v.mbiemri], [f.email, !emailOK.test(v.email)], [f.mesazhi, !v.mesazhi]].forEach(function (p) { p[0].classList.toggle('is-invalid', p[1]); if (p[1]) ok = false; });
+    [[f.emri, !v.emri], [f.mbiemri, !v.mbiemri], [f.telefoni, v.telefoni.replace(/\D/g, '').length < 6], [f.mesazhi, !v.mesazhi]].forEach(function (p) { p[0].classList.toggle('is-invalid', p[1]); if (p[1]) ok = false; });
     if (!ok) { note.textContent = t('form.err'); note.classList.add('is-error'); var fb = form.querySelector('.is-invalid'); if (fb) fb.focus(); return; }
-    var subject = 'Kërkesë e re — ' + v.emri + ' ' + v.mbiemri + (v.lloji ? ' · ' + v.lloji : '');
-    var body = [v.emri + ' ' + v.mbiemri, v.telefoni ? 'Tel: ' + v.telefoni : null, 'Email: ' + v.email, v.lloji ? (t('form.lloji') + ': ' + v.lloji) : null, '', v.mesazhi].filter(function (l) { return l !== null; }).join('\n');
+    var body = [t('form.head') + ' — ' + v.emri + ' ' + v.mbiemri, 'Tel: ' + v.telefoni, v.lloji ? (t('form.lloji') + ': ' + v.lloji) : null, '', v.mesazhi].filter(function (l) { return l !== null; }).join('\n');
     note.classList.remove('is-error'); note.textContent = t('form.sending');
-    window.location.href = 'mailto:' + H.CONTACT.email + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    var url = H.waLink(body), win = null;
+    try { win = window.open(url, '_blank', 'noopener'); } catch (err) { win = null; }
+    if (!win) window.location.href = url;
     var def = t('form.note'); setTimeout(function () { note.textContent = def; }, 4000);
   });
   document.addEventListener('input', function (e) { if (e.target.classList && e.target.classList.contains('is-invalid')) e.target.classList.remove('is-invalid'); });
@@ -214,7 +214,12 @@
   /* ------------------------- SCROLL TO TOP ------------------------- */
   var toTop = document.querySelector('[data-scroll-top]');
   if (toTop) {
-    var onScrollTop = function () { toTop.classList.toggle('is-visible', window.scrollY > 480); };
+    var onScrollTop = function () {
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      toTop.classList.toggle('is-visible', window.scrollY > 480);
+      toTop.style.setProperty('--p', max > 0 ? Math.min(100, Math.max(0, window.scrollY / max * 100)).toFixed(1) : 0);
+    };
+    window.addEventListener('resize', onScrollTop, { passive: true });
     window.addEventListener('scroll', onScrollTop, { passive: true });
     onScrollTop();
     toTop.addEventListener('click', function () {

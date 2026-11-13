@@ -139,9 +139,10 @@
         '<button type="button" class="qp-x" data-quote-close aria-label="' + esc(t('menu.close')) + '">' + I.x + '</button></header>' +
       (list.length ? '<ul class="qp-list">' + items + '</ul>' : '<div class="qp-empty">' + icon('box') + '<p>' + esc(t('shop.listEmpty')) + '</p></div>') +
       '<footer class="qp-foot"><p class="qp-note">' + esc(t('shop.note')) + '</p>' +
-        '<button type="button" class="btn btn-primary btn-block" data-q-send' + (list.length ? '' : ' disabled') + '>' + esc(t('shop.send')) + H.ARROW + '</button>' +
-        '<div class="qp-foot-row"><a href="tel:' + H.CONTACT.tel + '" class="qp-link">' + I.phone + H.CONTACT.telDisplay + '</a>' +
-        (list.length ? '<button type="button" class="qp-link" data-q-clear>' + esc(t('shop.clearList')) + '</button>' : '') + '</div>' +
+        (list.length ? '<a class="btn btn-wa btn-block" data-q-wa href="' + esc(H.waLink(listMsg())) + '" target="_blank" rel="noopener">' + H.WA_ICON + esc(t('shop.sendWa')) + '</a>'
+                     : '<button type="button" class="btn btn-wa btn-block" disabled>' + H.WA_ICON + esc(t('shop.sendWa')) + '</button>') +
+        '<a href="tel:' + H.CONTACT.tel + '" class="btn btn-ghost btn-block qp-call">' + I.phone + esc(t('shop.call')) + ' · ' + H.CONTACT.telDisplay + '</a>' +
+        (list.length ? '<div class="qp-foot-row"><button type="button" class="qp-link" data-q-clear>' + esc(t('shop.clearList')) + '</button></div>' : '') +
       '</footer></aside>';
   }
   function openPanel() {
@@ -202,7 +203,10 @@
           '<input type="number" inputmode="numeric" min="1" max="9999" value="' + detailQty + '" data-pd-input aria-label="' + esc(t('shop.qty')) + '">' +
           '<button type="button" data-pd-inc aria-label="+">+</button></div>' +
           '<button type="button" class="pd-add' + (on ? ' is-added' : '') + '" data-pd-add aria-pressed="' + on + '">' + pdAddInner(on) + '</button>' +
-          '<a href="tel:' + H.CONTACT.tel + '" class="pd-call">' + I.phone + '<span>' + esc(t('shop.call')) + '</span></a>' +
+        '</div>' +
+        '<div class="pd-contact">' +
+          '<a class="pd-wa" data-pd-wa href="' + esc(H.waLink(oneMsg())) + '" target="_blank" rel="noopener">' + H.WA_ICON + '<span>' + esc(t('shop.askWa')) + '</span></a>' +
+          '<a href="tel:' + H.CONTACT.tel + '" class="pd-call">' + I.phone + '<span>' + H.CONTACT.telDisplay + '</span></a>' +
         '</div>' +
         '<p class="pd-note">' + esc(t('shop.note')) + '</p>' +
         (rel.length ? '<div class="pd-rel"><h3>' + esc(t('shop.related')) + '</h3><div class="pd-rel-grid">' + rel.map(function (x) {
@@ -241,16 +245,9 @@
 
   /* Dërgimi: mbush formën e kontaktit me listën e produkteve */
   var prefill = null;
-  function send() {
-    var list = ids(); if (!list.length) return;
-    var lines = list.map(function (id) {
-      var p = byId(id), s = spec(p);
-      return '• ' + title(p) + (s ? ' (' + s + ')' : '') + ' — ' + t('shop.qty') + ': ' + quote[id];
-    });
-    prefill = t('shop.msgIntro') + '\n' + lines.join('\n') + '\n\n';
-    closePanel();
-    location.hash = '#/kontakti';
-  }
+  function line(id, n) { var p = byId(id), sp = spec(p); return '• ' + title(p) + (sp ? ' (' + sp + ')' : '') + ' — ' + t('shop.qty') + ': ' + n; }
+  function listMsg() { return t('shop.msgIntro') + '\n' + ids().map(function (id) { return line(id, quote[id]); }).join('\n'); }
+  function oneMsg() { return t('shop.msgOne') + '\n' + line(detailId, detailQty); }
   function fillContact() {
     if (!prefill) return;
     var ta = document.getElementById('cf-mesazhi'), sel = document.getElementById('cf-lloji');
@@ -387,6 +384,8 @@
       if (quote[id]) delete quote[id]; else { quote[id] = 1; bump(); }
       persist(); sync(); return;
     }
+    if ((b = e.target.closest('[data-q-wa]'))) { b.href = H.waLink(listMsg()); return; }
+    if ((b = e.target.closest('[data-pd-wa]'))) { b.href = H.waLink(oneMsg()); return; }
     if (e.target.closest('[data-quote-open]')) { closeDetail(); openPanel(); return; }
     if (detailId) {
       if (e.target.closest('[data-pd-close]')) { closeDetail(); return; }
@@ -410,7 +409,6 @@
       if (e.target.closest('[data-q-remove]')) { delete quote[pid]; persist(); sync(); return; }
     }
     if (e.target.closest('[data-q-clear]')) { Object.keys(quote).forEach(function (k) { delete quote[k]; }); persist(); sync(); return; }
-    if (e.target.closest('[data-q-send]')) send();
   });
 
   var qTimer = null;
